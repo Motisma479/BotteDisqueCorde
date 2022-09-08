@@ -1,11 +1,10 @@
-// BotteDisqueCorde.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
-//
-
 #include <iostream>
 #include <string>
 #include <chrono>
 #include <ctime>  
 #include <random>
+
+#include "Initialiser.hpp"
 
 #ifdef _WIN32
 #define SHUTDOWN_COMMAND "shutdown -t 0 -f -s"
@@ -15,47 +14,18 @@
 //TODO
 #endif
 
-
-
-
-
-/*
-int main()
-{
-    std::cout << "Hello World!\n";
-}
-*/
-// Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
-// Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
-
-// Astuces pour bien démarrer : 
-//   1. Utilisez la fenêtre Explorateur de solutions pour ajouter des fichiers et les gérer.
-//   2. Utilisez la fenêtre Team Explorer pour vous connecter au contrôle de code source.
-//   3. Utilisez la fenêtre Sortie pour voir la sortie de la génération et d'autres messages.
-//   4. Utilisez la fenêtre Liste d'erreurs pour voir les erreurs.
-//   5. Accédez à Projet > Ajouter un nouvel élément pour créer des fichiers de code, ou à Projet > Ajouter un élément existant pour ajouter des fichiers de code existants au projet.
-//   6. Pour rouvrir ce projet plus tard, accédez à Fichier > Ouvrir > Projet et sélectionnez le fichier .sln.
-
-
 #include <dpp/dpp.h>
 
-/* Be sure to place your token in the line below.
- * Follow steps here to get a token:
- * https://dpp.dev/creating-a-bot-application.html
- * When you invite the bot, be sure to invite it with the
- * scopes 'bot' and 'applications.commands', e.g.
- * https://discord.com/oauth2/authorize?client_id=940762342495518720&scope=bot+applications.commands&permissions=139586816064
- */
 const std::string    BOT_TOKEN = "OTQ3MjMwMjM2MzUxODExNjE0.G7n4Io.WRMdYnKBvcVVxPbO9OhMyM6VpMuf4V2-8pM0yg";
 
-#define MAX_SUS_IMAGES 62
-
 std::mt19937 rng;
-std::uniform_int_distribution<int> generator(0, MAX_SUS_IMAGES - 1);
+    std::uniform_int_distribution<int> generator;
 
+Data data;
 int main()
 {
-bool stp = false;
+    generator = std::uniform_int_distribution<int>(0, data.getMaxSusImages() - 1);
+    bool stp = false;
     rng.seed(time(NULL));
 
     static int lastRandom = -1;
@@ -79,7 +49,7 @@ bool stp = false;
             dpp::message temp;
 
             int index;
-            if (MAX_SUS_IMAGES > 1)
+            if (data.getMaxSusImages() > 1)
             {
                 index = generator(rng);
                 while (index == lastRandom) index = generator(rng);
@@ -127,9 +97,10 @@ bool stp = false;
         }
         if (event.command.get_command_name() == "clear") {
             dpp::snowflake temp = event.command.message_id;
-            
+
             bot.message_delete(event.command.get_channel().last_message_id, event.command.channel_id);
-            dpp::get_channel_cache
+            //dpp::get_channel_cache
+        }
         });
     
     /* Register slash command here in on_ready */
