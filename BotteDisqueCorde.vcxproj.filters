@@ -21,6 +21,9 @@
     <ClCompile Include="Sources\Initialiser.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\advancedFunction.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\AMOGUS\000.png">
@@ -296,9 +299,654 @@
     <Image Include="Resources\AMOGUS\089.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
+    <Image Include="Resources\AMOGUS\090.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\091.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\092.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\093.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\094.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\095.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\096.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\097.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\098.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\099.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\100.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\101.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\102.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\103.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\104.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\105.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\106.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\107.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\108.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\109.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\110.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\111.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\112.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\113.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\114.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\115.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\116.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\117.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\118.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\119.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\120.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\121.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\122.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\123.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\124.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\125.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\126.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\127.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\128.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\129.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\130.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\131.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\132.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\133.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\134.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\135.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\136.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\137.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\138.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\139.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\140.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\141.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\142.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\143.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\144.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\145.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\146.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\147.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\148.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\149.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\150.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\151.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\152.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\153.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\154.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\155.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\156.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\157.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\158.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\159.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\160.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\161.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\162.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\163.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\164.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\165.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\166.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\167.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\168.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\169.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\170.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\171.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\172.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\173.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\174.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\175.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\176.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\177.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\178.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\179.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\180.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\181.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\182.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\183.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\184.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\185.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\186.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\187.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\188.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\189.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\190.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\191.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\192.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\193.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\194.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\195.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\196.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\197.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\198.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\199.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\200.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\201.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\202.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\203.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\204.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\205.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\206.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\207.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\208.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\209.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\210.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\211.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\212.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\213.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\214.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\215.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\216.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\217.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\218.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\219.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\220.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\221.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\222.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\223.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\224.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\225.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\226.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\227.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\228.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\229.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\230.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\231.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\232.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\233.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\234.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\235.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\236.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\237.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\238.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\239.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\240.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\241.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\242.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\243.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\244.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\245.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\246.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\247.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\248.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\249.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\250.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\251.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\252.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\253.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\254.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\255.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\256.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\257.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\258.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\259.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\260.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\261.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\262.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\263.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\264.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\265.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\266.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\267.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\268.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\269.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\270.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\271.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\272.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\273.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\274.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\275.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\276.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\277.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\278.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\279.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\280.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\281.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\282.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\283.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\284.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\285.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\286.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\287.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\288.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\289.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\290.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\291.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\292.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\293.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\294.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\295.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\296.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\297.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\298.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\299.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\300.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\301.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\302.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Resources\AMOGUS\303.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Initialiser.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\advancedFunction.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -312,5 +960,7 @@
     <None Include="dependencies\bin\libssl-1_1-x64.dll" />
     <None Include="dependencies\bin\opus.dll" />
     <None Include="dependencies\bin\zlib1.dll" />
+    <None Include="token.ini" />
+    <None Include="superAdminId" />
   </ItemGroup>
 </Project>

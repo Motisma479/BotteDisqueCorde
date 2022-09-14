@@ -1,3 +1,6 @@
+#include <string>
+
+const std::string getToken();
 class Data
 {
 public:
