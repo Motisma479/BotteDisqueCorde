@@ -33,9 +33,22 @@ Data::Data()
 		std::string param;
 		stream >> param;
 		if (param.size() <= 1) continue;
-		else if (!param.compare("MAX_SUS_IMAGES:"))
-			stream >> maxSusImages;
+		//else if (!param.compare("MAX_SUS_IMAGES:"))
+		//	stream >> maxSusImages;
 	}
+	std::filesystem::path p = std::filesystem::current_path().append("Resources/AMOGUS");
+	for (const auto& entry : std::filesystem::directory_iterator(p))
+	{
+		std::cout << entry.path() << std::endl;
+		AMOGUSFiles.push_back(entry.path().string());
+	}
+	p = std::filesystem::current_path().append("Resources/MEME");
+	for (const auto& entry : std::filesystem::directory_iterator(p))
+	{
+		std::cout << entry.path() << std::endl;
+		memeFiles.push_back(entry.path().string());
+	}
+
 	std::cout << "data loaded" << std::endl;
 }
 
@@ -43,7 +56,30 @@ Data::~Data()
 {
 }
 
-int Data::getMaxSusImages()
+void Data::reload()
 {
-	return maxSusImages;
+	AMOGUSFiles.clear();
+	memeFiles.clear();
+
+	std::filesystem::path p = std::filesystem::current_path().append("Resources/AMOGUS");
+	for (const auto& entry : std::filesystem::directory_iterator(p))
+	{
+		std::cout << entry.path() << std::endl;
+		AMOGUSFiles.push_back(entry.path());
+	}
+	p = std::filesystem::current_path().append("Resources/MEME");
+	for (const auto& entry : std::filesystem::directory_iterator(p))
+	{
+		std::cout << entry.path() << std::endl;
+		memeFiles.push_back(entry.path());
+	}
+}
+
+const std::vector<std::filesystem::path>& Data::getSusImages()
+{
+	return AMOGUSFiles;
+}
+const std::vector<std::filesystem::path>& Data::getMemeImages()
+{
+	return memeFiles;
 }

@@ -1,4 +1,6 @@
 #include <string>
+#include <vector>
+#include <filesystem>
 
 const std::string getToken();
 class Data
@@ -6,7 +8,10 @@ class Data
 public:
 	Data();
 	~Data();
-	int getMaxSusImages();
+	const std::vector<std::filesystem::path>& getSusImages();
+	const std::vector<std::filesystem::path>& getMemeImages();
+	void reload();
 private:
-	int maxSusImages;
+	std::vector<std::filesystem::path> AMOGUSFiles;
+	std::vector<std::filesystem::path> memeFiles;
 };
