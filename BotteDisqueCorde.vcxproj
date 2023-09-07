@@ -111,18 +111,18 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\m.robion\Desktop\BotteDisqueCorde\dependencies\include\dpp-10.0;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\m.robion\Desktop\BotteDisqueCorde\dependencies\lib\dpp-10.0;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)dependencies\include\dpp;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)dependencies\lib\dpp;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\m.robion\Desktop\BotteDisqueCorde\dependencies\include\dpp-10.0;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\m.robion\Desktop\BotteDisqueCorde\dependencies\lib\dpp-10.0;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)dependencies\include\dpp;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)dependencies\lib\dpp;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_d|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\m.robion\Desktop\BotteDisqueCorde\dependencies\include\dpp-10.0;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\m.robion\Desktop\BotteDisqueCorde\dependencies\lib\dpp-10.0;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)dependencies\include\dpp;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)dependencies\lib\dpp;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -186,6 +186,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>dpp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d $(ProjectDir)dependencies\debug_DLL\*.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -206,6 +209,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>dpp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d $(ProjectDir)dependencies\release_DLL\*.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_d|x64'">
     <ClCompile>
@@ -226,6 +232,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>dpp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d $(ProjectDir)dependencies\release_DLL\*.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Sources\advancedFunction.cpp" />
