@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iostream>
 
-const std::string getToken()
+const std::string GetToken()
 {
 	std::ifstream token;
 	token.open("token.ini");
@@ -33,6 +33,17 @@ Data::Data()
 		std::string param;
 		stream >> param;
 		if (param.size() <= 1) continue;
+		else if (!param.compare("STOP_THE_MACHINE_ON_COMMAND:"))
+		{
+			std::string test;
+			stream >> test;
+			if (!test.compare("true"))
+			{
+				stopMachine = true;
+				continue;
+			}
+			stopMachine = false;
+		}
 		//else if (!param.compare("MAX_SUS_IMAGES:"))
 		//	stream >> maxSusImages;
 	}
@@ -56,7 +67,7 @@ Data::~Data()
 {
 }
 
-void Data::reload()
+void Data::Reload()
 {
 	AMOGUSFiles.clear();
 	memeFiles.clear();
@@ -75,11 +86,15 @@ void Data::reload()
 	}
 }
 
-const std::vector<std::filesystem::path>& Data::getSusImages()
+const std::vector<std::filesystem::path>& Data::GetSusImages()
 {
 	return AMOGUSFiles;
 }
-const std::vector<std::filesystem::path>& Data::getMemeImages()
+const std::vector<std::filesystem::path>& Data::GetMemeImages()
 {
 	return memeFiles;
+}
+const bool& Data::GetStopMachine()
+{
+	return stopMachine;
 }

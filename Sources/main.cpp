@@ -15,7 +15,7 @@
 #endif
 //✔❌
 
-const std::string    BOT_TOKEN = getToken();
+const std::string    BOT_TOKEN = GetToken();
 dpp::cluster bot(BOT_TOKEN);
 
 std::vector<std::unique_ptr<Commands::ICommand>> CommandList;
@@ -23,6 +23,7 @@ std::vector<std::unique_ptr<Commands::ICommand>> CommandList;
 Data data;
 int main()
 {
+
     CommandList.push_back(std::make_unique<Commands::Amogus>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Clear>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Dice>(bot, data));
@@ -54,7 +55,10 @@ int main()
         if(event.custom_id == "stop" && advanced::CheckSuperAdminID(event.command.usr.id))
         {
             bot.message_delete(event.command.message_id, event.command.channel_id);
-            //system(SHUTDOWN_COMMAND);
+            if(data.GetStopMachine())
+                system(SHUTDOWN_COMMAND);
+            Sleep(500);
+            bot.shutdown();
         }
         //del ✔
         if (event.custom_id == "del")

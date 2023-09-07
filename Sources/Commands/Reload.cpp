@@ -15,7 +15,7 @@ void Commands::Reload::Init()
 void Commands::Reload::Execute(const dpp::slashcommand_t& event)
 {
     if (event.command.get_command_name() == "reload") {
-        cp_data.reload();
+        cp_data.Reload();
         for (int i = 0; i < CommandList.size(); i++)
         {
             CommandList[i].get()->Reload();
