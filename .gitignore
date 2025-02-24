@@ -3,6 +3,8 @@ Debug/
 x64/
 Release/
 
+out/
+
 *.sln
 *.vcxproj.filters
 *.vcxproj.user
