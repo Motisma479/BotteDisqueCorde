@@ -17,8 +17,10 @@ void callback(const dpp::confirmation_callback_t& event)
     for (auto m = object.begin(); m != object.end(); m++)
         //bot.message_delete(m->second.id, m->second.channel_id);
         msgids.push_back(m->second.id);
-
-   _bot->message_delete_bulk(msgids, chanelId);
+    if (msgids.size() == 1)//if delete only 1
+        _bot->message_delete(msgids[0], chanelId);
+    else
+       _bot->message_delete_bulk(msgids, chanelId);
     return;
 }
 
@@ -38,15 +40,17 @@ void Commands::Clear::Execute(const dpp::slashcommand_t& event)
     if (event.command.get_command_name() == "clear") {
         int value;
         if (event.get_parameter("count").index() <= 0)
-            value = 10;
+            value = 1;
         else
         {
             value = std::get<int64_t>(event.get_parameter("count"));
             if (value <= 0)
-                value = 2;
+                value = 1;
         }
+
+
         cp_bot.messages_get(event.command.channel_id, 0, event.command.message_id, 0, value, callback);
-        event.reply("complete");
-        event.delete_original_response();
+        //cp_bot.mess
+        event.reply(dpp::message("complete").set_flags(dpp::m_ephemeral));
     }
 }

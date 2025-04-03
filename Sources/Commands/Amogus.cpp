@@ -3,7 +3,7 @@
 Commands::Amogus::Amogus(dpp::cluster& bot, Data& data) : ICommand(bot, data)
 {
     rng.seed(time(NULL));
-    AMOGUSGenerator = std::uniform_int_distribution<int>(0, data.GetSusImages().size() - 1);
+    //AMOGUSGenerator = std::uniform_int_distribution<int>(0, data.GetSusImages().size() - 1);
 }
 
 void Commands::Amogus::Init()

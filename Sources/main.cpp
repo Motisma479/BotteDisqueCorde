@@ -15,7 +15,7 @@
 #endif
 //✔❌
 
-const std::string    BOT_TOKEN = GetToken();
+const std::string BOT_TOKEN = GetToken();
 dpp::cluster bot(BOT_TOKEN);
 
 std::vector<std::unique_ptr<Commands::ICommand>> CommandList;
@@ -50,7 +50,7 @@ int main()
     });
 
     /* Handle button action */
-    bot.on_button_click([](const dpp::button_click_t& event) {
+    bot.on_button_click([&](const dpp::button_click_t& event) {
         //stop ✔
         if(event.custom_id == "stop" && advanced::CheckSuperAdminID(event.command.usr.id))
         {
@@ -63,11 +63,17 @@ int main()
         //del ✔
         if (event.custom_id == "del")
         {
-            bot.message_delete(event.command.message_id, event.command.channel_id);
+            //do not work may need a rework.
+
+            //auto a = event.command.msg;
+
+            //event.edit_response(dpp::message("command canceled...").set_flags(dpp::m_ephemeral));
+            
+            //bot.message_delete(event.command.message_id, event.command.channel_id);
         }
     });
 
     /* Start the bot */
-    bot.start(false);
+    bot.start(static_cast<dpp::start_type>(false));
     return 0;
 }

@@ -3,7 +3,7 @@
 Commands::Meme::Meme(dpp::cluster& bot, Data& data) : ICommand(bot, data)
 {
     rng.seed(time(NULL));
-    memeGenerator = std::uniform_int_distribution<int>(0, data.GetMemeImages().size() - 1);
+//    memeGenerator = std::uniform_int_distribution<int>(0, data.GetMemeImages().size() - 1);
 }
 
 void Commands::Meme::Init()

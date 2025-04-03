@@ -47,6 +47,9 @@ Data::Data()
 		//else if (!param.compare("MAX_SUS_IMAGES:"))
 		//	stream >> maxSusImages;
 	}
+	
+	/*
+
 	std::filesystem::path p = std::filesystem::current_path().append("Resources/AMOGUS");
 	for (const auto& entry : std::filesystem::directory_iterator(p))
 	{
@@ -59,6 +62,8 @@ Data::Data()
 		std::cout << entry.path() << std::endl;
 		memeFiles.push_back(entry.path().string());
 	}
+
+	*/
 
 	std::cout << "data loaded" << std::endl;
 }

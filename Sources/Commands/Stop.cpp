@@ -27,6 +27,6 @@ void Commands::Stop::Execute(const dpp::slashcommand_t& event)
                 set_id("del")
             )
         );
-        event.reply(temp);
+        event.reply(temp.set_flags(dpp::m_ephemeral));
     }
 }
