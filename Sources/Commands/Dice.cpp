@@ -2,12 +2,13 @@
 
 Commands::Dice::Dice(dpp::cluster& bot, Data& data) : ICommand(bot, data)
 {
+    name = "dice";
     rng.seed(time(NULL));
 }
 
-void Commands::Dice::Init()
+void Commands::Dice::Init(bool registerCommand)
 {
-    if (dpp::run_once<struct register_bot_commands>()) {
+    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
         dpp::slashcommand newcommand("dice", "roll a dice", cp_bot.me.id);
         newcommand.add_option(
             dpp::command_option(dpp::co_integer, "face", "the number face", false)

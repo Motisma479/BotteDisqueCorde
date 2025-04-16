@@ -4,6 +4,7 @@ dpp::cluster* _bot;
 
 Commands::Clear::Clear(dpp::cluster& bot, Data& data) : ICommand(bot, data)
 {
+    name = "clear";
     _bot = &bot;
 }
 
@@ -24,9 +25,9 @@ void callback(const dpp::confirmation_callback_t& event)
     return;
 }
 
-void Commands::Clear::Init()
+void Commands::Clear::Init(bool registerCommand)
 {
-    if (dpp::run_once<struct register_bot_commands>()) {
+    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
         dpp::slashcommand newcommand("clear", "clear the chanel", cp_bot.me.id);
         newcommand.add_option(
             dpp::command_option(dpp::co_integer, "count", "the number of message to delete", false)
@@ -51,6 +52,9 @@ void Commands::Clear::Execute(const dpp::slashcommand_t& event)
 
         cp_bot.messages_get(event.command.channel_id, 0, event.command.message_id, 0, value, callback);
         //cp_bot.mess
-        event.reply(dpp::message("complete").set_flags(dpp::m_ephemeral));
+
+        std::ostringstream response;
+        response << ":white_check_mark: **complete**\n> :wastebasket: message deleted: **" << value<<"**";
+        event.reply(dpp::message(response.str()).set_flags(dpp::m_ephemeral));
     }
 }

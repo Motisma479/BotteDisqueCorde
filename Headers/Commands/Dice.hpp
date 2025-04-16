@@ -9,7 +9,7 @@ namespace Commands
 	public:
 		Dice(dpp::cluster& bot, Data& data);
 
-		void Init();
+		void Init(bool registerCommand);
 		void Execute(const dpp::slashcommand_t& event);
 	private:
 		std::mt19937 rng;

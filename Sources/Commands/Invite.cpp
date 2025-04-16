@@ -1,8 +1,13 @@
 #include "Commands/Invite.hpp"
 
-void Commands::Invite::Init()
+Commands::Invite::Invite(dpp::cluster& bot, Data& data) : ICommand(bot, data)
 {
-    if (dpp::run_once<struct register_bot_commands>()) {
+    name = "invite";
+}
+
+void Commands::Invite::Init(bool registerCommand)
+{
+    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
         dpp::slashcommand newcommand("invite", "invite a user to play some game", cp_bot.me.id);
         newcommand.add_option(
             dpp::command_option(dpp::co_string, "game", "The game to play", true).

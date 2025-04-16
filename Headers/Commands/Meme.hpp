@@ -9,7 +9,7 @@ namespace Commands
 	public:
 		Meme(dpp::cluster& bot, Data& data);
 
-		void Init();
+		void Init(bool registerCommand);
 		void Execute(const dpp::slashcommand_t& event);
 		void Reload();
 	private:

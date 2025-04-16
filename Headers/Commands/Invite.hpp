@@ -6,9 +6,9 @@ namespace Commands
 	class Invite : public ICommand
 	{
 	public:
-		Invite(dpp::cluster& bot, Data& data) : ICommand(bot, data) {}
+		Invite(dpp::cluster& bot, Data& data);
 
-		void Init();
+		void Init(bool registerCommand);
 		void Execute(const dpp::slashcommand_t& event);
 	};
 }

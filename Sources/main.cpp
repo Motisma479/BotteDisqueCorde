@@ -23,7 +23,6 @@ std::vector<std::unique_ptr<Commands::ICommand>> CommandList;
 Data data;
 int main()
 {
-
     CommandList.push_back(std::make_unique<Commands::Amogus>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Clear>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Dice>(bot, data));
@@ -43,10 +42,30 @@ int main()
     });
 
     bot.on_ready([](const dpp::ready_t& event) {
-        for (int i = 0; i < CommandList.size(); i++)
-        {
-            CommandList[i].get()->Init();
-        }
+        bot.global_commands_get([&](const dpp::confirmation_callback_t& callback) {
+            std::vector<std::pair<std::string,uint64_t>> existingCommand;
+
+            if (!callback.is_error()) {
+                auto commands = std::get<dpp::slashcommand_map>(callback.value);
+                for (const auto& [id, cmd] : commands) {
+                    std::cout << "Existing Command: " << cmd.name << " (ID: " << id << ")\n";
+                    existingCommand.push_back(std::make_pair(cmd.name,id));
+                }
+            }
+
+            for (auto& command : CommandList)
+            {
+                std::vector<std::pair<std::string, uint64_t>>::iterator it;
+                it = std::find_if(existingCommand.begin(), existingCommand.end(), [&](const std::pair<std::string, uint64_t>& entry){return entry.first == command->name;});
+                command->Init(it != existingCommand.end() ? false : true);
+                existingCommand.erase(it);
+            }
+
+            for(const auto& [name, id] : existingCommand)//delete all the obselet command
+            {
+                bot.global_command_delete(id);
+            }
+        });
     });
 
     /* Handle button action */
@@ -54,11 +73,19 @@ int main()
         //stop ✔
         if(event.custom_id == "stop" && advanced::CheckSuperAdminID(event.command.usr.id))
         {
-            bot.message_delete(event.command.message_id, event.command.channel_id);
-            if(data.GetStopMachine())
+            std::string messageContent;
+            if (data.GetStopMachine()) messageContent = "\n<:power:1361998188831047831> ** Hosting machine is sutting down ** <:power:1361998188831047831>\n";
+            else messageContent = "\n<:power:1361998188831047831> ** Bot is sutting down ** <:power:1361998188831047831>\n";
+            
+
+            event.reply(dpp::interaction_response_type::ir_update_message, dpp::message(messageContent).set_flags(dpp::m_ephemeral));
+            Sleep(2000);
+            
+                
+            if (data.GetStopMachine())
                 system(SHUTDOWN_COMMAND);
-            Sleep(500);
             bot.shutdown();
+         
         }
         //del ✔
         if (event.custom_id == "del")
@@ -73,7 +100,7 @@ int main()
         }
     });
 
-    /* Start the bot */
+    /* Start the bot */    
     bot.start(static_cast<dpp::start_type>(false));
     return 0;
 }

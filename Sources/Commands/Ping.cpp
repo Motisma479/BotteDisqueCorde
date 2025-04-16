@@ -1,8 +1,13 @@
 #include "Commands/Ping.hpp"
 
-void Commands::Ping::Init()
+Commands::Ping::Ping(dpp::cluster& bot, Data& data) : ICommand(bot, data)
 {
-    if (dpp::run_once<struct register_bot_commands>()) {
+    name = "ping";
+}
+
+void Commands::Ping::Init(bool registerCommand)
+{
+    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
         cp_bot.global_command_create(dpp::slashcommand("ping", "Ping pong!", cp_bot.me.id));
     }
 }
