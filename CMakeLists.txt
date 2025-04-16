@@ -13,10 +13,12 @@ set(SOURCES
     "Sources/Commands/Amogus.cpp"
     "Sources/Commands/Clear.cpp"
     "Sources/Commands/Dice.cpp"
+    "Sources/Commands/Dm.cpp"
     "Sources/Commands/Invite.cpp"
     "Sources/Commands/Meme.cpp"
     "Sources/Commands/Ping.cpp"
     "Sources/Commands/Reload.cpp"
+    "Sources/Commands/Say.cpp"
     "Sources/Commands/Stop.cpp"
 )
 

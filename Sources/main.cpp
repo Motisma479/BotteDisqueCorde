@@ -26,10 +26,12 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Amogus>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Clear>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Dice>(bot, data));
+    CommandList.push_back(std::make_unique<Commands::Dm>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Invite>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Meme>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Ping>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Reload>(bot, data, CommandList));
+    CommandList.push_back(std::make_unique<Commands::Say>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Stop>(bot, data));
 
     bot.on_log(dpp::utility::cout_logger());
@@ -57,8 +59,13 @@ int main()
             {
                 std::vector<std::pair<std::string, uint64_t>>::iterator it;
                 it = std::find_if(existingCommand.begin(), existingCommand.end(), [&](const std::pair<std::string, uint64_t>& entry){return entry.first == command->name;});
-                command->Init(it != existingCommand.end() ? false : true);
-                existingCommand.erase(it);
+                if (it != existingCommand.end())
+                {
+                    command->Init(false);
+                    existingCommand.erase(it);
+                }
+                else
+                    command->Init(true);
             }
 
             for(const auto& [name, id] : existingCommand)//delete all the obselet command
