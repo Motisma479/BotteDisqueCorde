@@ -82,8 +82,8 @@ int main()
         if(event.custom_id == "stop" && advanced::CheckSuperAdminID(event.command.usr.id))
         {
             std::string messageContent;
-            if (data.GetStopMachine()) messageContent = "\n<:power:1361998188831047831> ** Hosting machine is sutting down ** <:power:1361998188831047831>\n";
-            else messageContent = "\n<:power:1361998188831047831> ** Bot is sutting down ** <:power:1361998188831047831>\n";
+            if (data.GetStopMachine()) messageContent = "\n<:power:1362438577451172110> ** Hosting machine is sutting down ** <:power:1362438577451172110>\n";
+            else messageContent = "\n<:power:1362438577451172110> ** Bot is sutting down ** <:power:1362438577451172110>\n";
             
 
             event.reply(dpp::interaction_response_type::ir_update_message, dpp::message(messageContent).set_flags(dpp::m_ephemeral));

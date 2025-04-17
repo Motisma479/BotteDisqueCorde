@@ -23,7 +23,7 @@ void Commands::Stop::Execute(const dpp::slashcommand_t& event)
             dpp::component()
             .add_component(
                 dpp::component().
-                set_emoji("button", 1361998188831047831).
+                set_emoji("powerButton", 1362438500661592224).
                 set_type(dpp::cot_button).
                 set_style(dpp::cos_danger).
                 set_id("stop")

@@ -15,11 +15,17 @@ void Commands::Ping::Init(bool registerCommand)
 void Commands::Ping::Execute(const dpp::slashcommand_t& event)
 {
     if (event.command.get_command_name() == "ping") {
-        double APIH = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch().count();
-        APIH /= 1000;
-        double result = (APIH - event.command.get_creation_time()) * 1000;
-        std::string temp = "🏓Pong!\n------------------------\nlatency:\n" + std::to_string(abs(result)) + " ms" + "\n------------------------\nAPI:\n" + std::to_string(APIH - std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch().count() / 1000) + " ms";
-        event.reply(temp);
+        double latency_ms = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::system_clock::now().time_since_epoch() ).count() - static_cast<long long>(event.command.get_creation_time() * 1000.0);
+        auto api_start = std::chrono::steady_clock::now();
+       
+        std::string temp = ":ping_pong:Pong!\n------------------------\nlatency:\n" + std::to_string(latency_ms) + " ms" + "\n------------------------\nAPI:\n<a:loading:1362431721399783505>";
+        event.reply(temp, [event, latency_ms, api_start](const dpp::confirmation_callback_t& callback) {
+            auto api_end = std::chrono::steady_clock::now();
+            double api_ms = std::chrono::duration_cast<std::chrono::milliseconds>(api_end - api_start).count();
+            
+            std::string after = ":ping_pong:Pong!\n------------------------\nlatency:\n" + std::to_string(latency_ms) + " ms" + "\n------------------------\nAPI:\n" + std::to_string(api_ms) + " ms";;
+            event.edit_original_response(dpp::message(after));
+        });
 
     }
 }
