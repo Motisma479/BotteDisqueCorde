@@ -2,6 +2,7 @@
 #include <chrono>
 #include <ctime>  
 #include <memory>
+#include <thread>
 
 #include "advancedFunction.hpp"
 #include "Commands/Commands.hpp"
@@ -86,7 +87,7 @@ int main()
             
 
             event.reply(dpp::interaction_response_type::ir_update_message, dpp::message(messageContent).set_flags(dpp::m_ephemeral));
-            Sleep(2000);
+	    std::this_thread::sleep_for(std::chrono::seconds(2));
             
                 
             if (data.GetStopMachine())
