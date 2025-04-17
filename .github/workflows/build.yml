@@ -12,9 +12,9 @@ jobs:
 
     steps:
     - name: Checkout repository
-    - uses: actions/checkout@v2
-    with:
-      submodules: true
+      uses: actions/checkout@v2
+      with:
+        submodules: true
 
     - name: Install dependencies
       run: sudo ap update && sudo apt install -y cmake g++ make
