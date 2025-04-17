@@ -4,6 +4,7 @@ x64/
 Release/
 
 out/
+build/
 
 *.sln
 *.vcxproj.filters
