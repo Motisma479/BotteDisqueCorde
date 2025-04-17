@@ -27,8 +27,36 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 add_subdirectory(Externals/DPP)
 target_link_libraries(${PROJECT_NAME} dpp)
 
+# copy all fille nedded to launch
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
      COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_FILE_DIR:dpp>/libdpp.so
+        ${CMAKE_SOURCE_DIR}/settings.ini
+        ${CMAKE_SOURCE_DIR}/superAdminId
+        ${CMAKE_SOURCE_DIR}/token.ini
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/Resources
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/Resources
+)
+
+# copy all required dll
+if (WIN32)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE_DIR:dpp>/dpp.dll
+            $<TARGET_FILE_DIR:dpp>/libssl-1_1-x64.dll
+            $<TARGET_FILE_DIR:dpp>/libcrypto-1_1-x64.dll
+            $<TARGET_FILE_DIR:dpp>/zlib1.dll
+            $<TARGET_FILE_DIR:dpp>/opus.dll
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    )
+else()
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE_DIR:dpp>/libdpp.so
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    )
+endif()
