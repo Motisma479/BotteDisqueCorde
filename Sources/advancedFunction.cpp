@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <ctime>
 
 bool advanced::CheckSuperAdminID(const uint64_t id)
 {
@@ -16,4 +17,24 @@ bool advanced::CheckSuperAdminID(const uint64_t id)
 		}
 	}
 	return false;
+}
+
+date advanced::GetActualDate()
+{
+	date result;
+
+	std::time_t t = std::time(nullptr);
+	std::tm* now = std::localtime(&t);
+
+	result.day = now->tm_mday;
+	result.dayOfWeek = now->tm_wday;
+
+	result.month = now->tm_mon + 1;
+
+	result.year = now->tm_year + 1900;
+
+	result.hour = now->tm_hour;
+
+	result.minute = now->tm_min;
+	return result;
 }
