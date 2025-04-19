@@ -63,6 +63,12 @@ jobs:
       run: |
           cmake --build . --config Release
           
+    - name: Debug - Check DLL existence
+      shell: cmd
+      run: |
+        dir D:\a\BotteDisqueCorde\BotteDisqueCorde\Externals\DPP\library\Release\
+
+    
     - name: Test
       shell: powershell
       run: |
