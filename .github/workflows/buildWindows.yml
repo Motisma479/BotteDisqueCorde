@@ -63,11 +63,21 @@ jobs:
       run: |
           cmake --build "$env:BUILD_DIR" --config Release
           
-    #- name: Debug - Check DLL existence
-    #  if: ${{ always() }}
-    #  shell: cmd
-    #  run: |
-    #    dir D:\a\BotteDisqueCorde\BotteDisqueCorde\Externals\DPP\library\Release\
+    - name: Debug - Check DLL existence
+      if: ${{ always() }}
+      shell: cmd
+      run: |
+        dir D:\a\BotteDisqueCorde\BotteDisqueCorde\
+        echo -------------------------------
+        dir D:\a\BotteDisqueCorde\BotteDisqueCorde\build\
+        echo -------------------------------
+        dir D:\a\BotteDisqueCorde\BotteDisqueCorde\build\Externals\
+        echo -------------------------------
+        dir D:\a\BotteDisqueCorde\BotteDisqueCorde\biuld\Externals\DPP\
+        echo -------------------------------
+        dir D:\a\BotteDisqueCorde\BotteDisqueCorde\biuld\Externals\DPP\library\
+        echo -------------------------------
+        dir D:\a\BotteDisqueCorde\BotteDisqueCorde\biuld\Externals\DPP\library\Release\
 
     
     - name: Test
