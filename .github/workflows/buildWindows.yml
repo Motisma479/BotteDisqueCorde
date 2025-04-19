@@ -64,6 +64,7 @@ jobs:
           cmake --build . --config Release
           
     - name: Debug - Check DLL existence
+      if: ${{ always() }}
       shell: cmd
       run: |
         dir D:\a\BotteDisqueCorde\BotteDisqueCorde\Externals\DPP\library\Release\
