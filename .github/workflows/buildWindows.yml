@@ -15,6 +15,7 @@ jobs:
 
     env:
       BUILD_SYS: Visual Studio 17 2022
+      BUILD_DIR: build
     
     
     steps:
@@ -53,21 +54,20 @@ jobs:
       shell: powershell
       run: |
         cmake --version
-        cmake -G "$env:BUILD_SYS" -A x64 `
-        -DCMAKE_BUILD_TYPE=Release `
-        -DLINK_FLAGS="/NODEFAULTLIB:MSVCRT" -S . -B .
+        cmake -B "$env:BUILD_DIR" -G "$env:BUILD_SYS" -A x64
+      # -DLINK_FLAGS="/NODEFAULTLIB:MSVCRT" -S . -B .
       # -DCMAKE_INSTALL_PREFIX="C:\Tools\swig" `
 
     - name: Build
       shell: powershell
       run: |
-          cmake --build . --config Release
+          cmake --build "$env:BUILD_DIR" --config Release
           
-    - name: Debug - Check DLL existence
-      if: ${{ always() }}
-      shell: cmd
-      run: |
-        dir D:\a\BotteDisqueCorde\BotteDisqueCorde\Externals\DPP\library\Release\
+    #- name: Debug - Check DLL existence
+    #  if: ${{ always() }}
+    #  shell: cmd
+    #  run: |
+    #    dir D:\a\BotteDisqueCorde\BotteDisqueCorde\Externals\DPP\library\Release\
 
     
     - name: Test
