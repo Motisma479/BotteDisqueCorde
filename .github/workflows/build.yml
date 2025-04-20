@@ -81,11 +81,7 @@ jobs:
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build project
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
+        run: cmake --build ${{github.workspace}}/build --config Release
 
       - name: Transfer artifacts to server
         uses: easingthemes/ssh-deploy@v2.1.5
