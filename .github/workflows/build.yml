@@ -83,6 +83,10 @@ jobs:
       - name: Build project
         run: cmake --build ${{github.workspace}}/build --config Release
 
+      - name: Save build date and time
+        run: |
+          date "+Build date: %Y-%m-%d %H:%M:%S UTC" > build/buildInformation
+      
       - name: Transfer artifacts to server
         uses: easingthemes/ssh-deploy@main
         with:
