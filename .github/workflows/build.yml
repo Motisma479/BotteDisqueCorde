@@ -66,3 +66,44 @@ jobs:
       shell: bash
       run: |
         ctest --test-dir "$BUILD_DIR" --output-on-failure -C ${{ matrix.build_type }}
+
+  build-and-deploy:
+    if: contains(github.event.head_commit.message, '[sendToServer]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up CMake
+        uses: lukka/get-cmake@v3
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: Transfer artifacts to server
+        uses: easingthemes/ssh-deploy@v2.1.5
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          remote-user: ${{ secrets.SSH_USER }}
+          server-ip: ${{ secrets.SSH_HOST }}
+          remote-path: /home/deploy/BotteDisqueCorde_install  # Replace with your server path
+          local-path: build  # Adjust if your build output is elsewhere
+
+      - name: Restart systemd service
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo systemctl restart botteDisqueCorde.service  # Replace with your service name
