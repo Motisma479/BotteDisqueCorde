@@ -84,13 +84,13 @@ jobs:
         run: cmake --build ${{github.workspace}}/build --config Release
 
       - name: Transfer artifacts to server
-        uses: easingthemes/ssh-deploy@v2.1.5
+        uses: easingthemes/ssh-deploy@main
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          remote-user: ${{ secrets.SSH_USER }}
-          server-ip: ${{ secrets.SSH_HOST }}
-          remote-path: /home/deploy/BotteDisqueCorde_install  # Replace with your server path
-          local-path: build  # Adjust if your build output is elsewhere
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          TARGET: /home/deploy/BotteDisqueCorde_install  # Replace with your server path
+          SOURCE: build  # Adjust if your build output is elsewhere
 
       - name: Restart systemd service
         uses: appleboy/ssh-action@v0.1.6
