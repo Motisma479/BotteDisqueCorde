@@ -85,14 +85,14 @@ jobs:
         run: |
           date "+Build date: %Y-%m-%d %H:%M:%S UTC" > build/buildInformation
       
-      - name: Transfer artifacts to server
+      - name: Transfer artifacts to server # transfer the build to the server
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_USER: ${{ secrets.SSH_USER }}
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          TARGET: /home/deploy/BotteDisqueCorde_install  # Replace with your server path
-          SOURCE: build  # Adjust if your build output is elsewhere
+          TARGET: /home/deploy/BotteDisqueCorde_install
+          SOURCE: build
 
       - name: Restart systemd service
         uses: appleboy/ssh-action@v0.1.6
