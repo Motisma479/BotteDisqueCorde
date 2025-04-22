@@ -17,6 +17,7 @@ set(SOURCES
     "Sources/Commands/Invite.cpp"
     "Sources/Commands/Meme.cpp"
     "Sources/Commands/Ping.cpp"
+    "Sources/Commands/Poll.cpp"
     "Sources/Commands/Reload.cpp"
     "Sources/Commands/Say.cpp"
     "Sources/Commands/Stop.cpp"

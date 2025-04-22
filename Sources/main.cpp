@@ -31,6 +31,7 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Invite>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Meme>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Ping>(bot, data));
+    CommandList.push_back(std::make_unique<Commands::Poll>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Reload>(bot, data, CommandList));
     CommandList.push_back(std::make_unique<Commands::Say>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Stop>(bot, data));

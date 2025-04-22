@@ -8,6 +8,7 @@
 #include "Commands/Invite.hpp"
 #include "Commands/Meme.hpp"
 #include "Commands/Ping.hpp"
+#include "Commands/Poll.hpp"
 #include "Commands/Reload.hpp"
 #include "Commands/Say.hpp"
 #include "Commands/Stop.hpp"
