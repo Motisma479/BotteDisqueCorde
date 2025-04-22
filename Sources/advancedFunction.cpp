@@ -19,9 +19,9 @@ bool advanced::CheckSuperAdminID(const uint64_t id)
 	return false;
 }
 
-date advanced::GetActualDate()
+Date advanced::GetActualDate()
 {
-	date result;
+	Date result;
 
 	std::time_t t = std::time(nullptr);
 	std::tm* now = std::localtime(&t);

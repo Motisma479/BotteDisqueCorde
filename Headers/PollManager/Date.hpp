@@ -1,12 +1,12 @@
 #pragma once
 
-struct date
+struct Date
 {
-	int day;
-	int month;
-	int year;
-	int hour;
-	int minute;
+	int day = -1;
+	int month = -1;
+	int year = -1;
+	int hour = -1;
+	int minute = -1;
 
-	int dayOfWeek;
+	int dayOfWeek = -1;
 };

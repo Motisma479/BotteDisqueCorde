@@ -21,6 +21,9 @@ set(SOURCES
     "Sources/Commands/Reload.cpp"
     "Sources/Commands/Say.cpp"
     "Sources/Commands/Stop.cpp"
+
+    "Sources/PollManager/Poll.cpp"
+    "Sources/PollManager/PollManager.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

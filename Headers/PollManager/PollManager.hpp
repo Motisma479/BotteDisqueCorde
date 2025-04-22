@@ -3,10 +3,10 @@
 class PollManager
 {
 public:
-	void Add(Poll _poll);
+	void Add(PollData _poll);
 	void Update();
 	void Load();
 private:
 	void Save();
-	std::vector<Poll> polls;
+	std::vector<PollData> polls;
 };

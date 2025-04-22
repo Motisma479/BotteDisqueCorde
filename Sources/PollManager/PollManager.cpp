@@ -1,6 +1,6 @@
 #include "PollManager/PollManager.hpp"
 
-void PollManager::Add(Poll _poll)
+void PollManager::Add(PollData _poll)
 {
 
 }
