@@ -1,17 +1,18 @@
 #pragma once
 #include "Commands/ICommand.hpp"
-#include "PollManager/Poll.hpp"
+#include "PollManager/PollManager.hpp"
 
 namespace Commands
 {
 	class Poll : public ICommand
 	{
 	public:
-		Poll(dpp::cluster& bot, Data& data);
+		Poll(dpp::cluster& bot, Data& data, PollManager& manager);
 
 		void Init(bool registerCommand);
 		void Execute(const dpp::slashcommand_t& event);
 	private:
 		Date ParseDateTime(const std::string& _input);
+		PollManager& pollManager;
 	};
 }

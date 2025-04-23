@@ -5,7 +5,7 @@
 #include <codecvt>
 
 
-Commands::Poll::Poll(dpp::cluster& bot, Data& data) : ICommand(bot, data)
+Commands::Poll::Poll(dpp::cluster& bot, Data& data, PollManager& manager) : ICommand(bot, data), pollManager(manager)
 {
     name = "poll";
 }
@@ -55,12 +55,12 @@ void Commands::Poll::Init(bool registerCommand)
     }
 }
 
+
 static std::u32string utf8_to_u32(const std::string& s) {
     std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv;
     return conv.from_bytes(s);
 }
 
-// Return true if 'cp' is in one of the Unicode ranges where 'vanilla' emojis live
 static bool is_emoji_codepoint(char32_t cp) {
     // These ranges cover most “vanilla” emojis; add more as needed
     static const std::vector<std::pair<char32_t, char32_t>> R = {
@@ -80,8 +80,6 @@ static bool is_emoji_codepoint(char32_t cp) {
     }
     return false;
 }
-
-
 
 bool IsAnEmoji(const std::string& input) {
     // Regular expression pattern to match common emoji ranges
@@ -132,14 +130,13 @@ void Commands::Poll::Execute(const dpp::slashcommand_t& event)
                 }
             }
    
-            if (std::holds_alternative<std::string>(event.get_parameter("date")))
+            if (std::holds_alternative<std::string>(event.get_parameter("date"))) //if the poll as a due date register it to the manager
             {
                 std::string datestr = std::get<std::string>(event.get_parameter("date"));
                 Date dueDate;
                 try
                 {
                     dueDate = ParseDateTime(datestr);
-
                 }
                 catch (std::runtime_error error)
                 {
@@ -147,64 +144,77 @@ void Commands::Poll::Execute(const dpp::slashcommand_t& event)
                     return;
                 }
                 newPoll.SetDueDate(dueDate);
-            }
-            dpp::poll poll;
-            poll.question.text = newPoll.title;
-            poll.expiry = newPoll.duration;
-
-            for (const auto [answer, emoji] : newPoll.awnsers)
-            {
-                //dpp::emoji temp(":image1:");
-                dpp::emoji temp;
-
-                std::regex emoji_regex(R"(<a?:([a-zA-Z0-9_]+):(\d+)>)");
-                std::smatch match;
-                if (std::regex_match(emoji, match, emoji_regex)) {
-                    temp.name = match[1];
-                    temp.id = dpp::snowflake(std::string(match[2]));
-                    if(emoji[1] == 'a')
-                        temp.flags |= dpp::e_animated;
-                }
-                else
+                if (std::holds_alternative<bool>(event.get_parameter("should_repeat"))) //check if it should repeat
                 {
-                    temp.name = emoji;
+                    newPoll.shouldRepeat = std::get<bool>(event.get_parameter("should_repeat"));
                 }
 
-                poll.add_answer(answer, temp);
+                pollManager.Add(newPoll, event.command.get_guild().id, event.command.channel_id);
+                
+                //reply
+                std::string expirystr = std::to_string(newPoll.duration);
+                expirystr.erase(expirystr.find_last_not_of('0') + 1, std::string::npos);
+                std::string message = ">>> **:white_check_mark: Poll Created with:**\n- **Question:** " + newPoll.title +
+                    "\n- **Expiry in:** " + expirystr + "**h**" +
+                    "\n- **Due date:** " + datestr +
+                    "\n- **Will repeat:** " + (newPoll.shouldRepeat?"true":"false") + "\n- **answer: **\n";
+                for (const auto [answer, emoji] : newPoll.awnsers)
+                {
+                    if(emoji.size() > 0)
+                        message += "   - " + emoji + ", " + answer + '\n';
+                    else
+                        message += "   - " + answer + '\n';
+                }
+                event.reply(dpp::message(message).set_flags(dpp::m_ephemeral));
             }
+            else
+            {
+                dpp::poll poll;
+                poll.question.text = newPoll.title;
+                poll.expiry = newPoll.duration;
+                for (const auto [answer, emoji] : newPoll.awnsers)
+                {
+                    //dpp::emoji temp(":image1:");
+                    dpp::emoji temp;
 
-            cp_bot.message_create(dpp::message(event.command.channel_id, "").set_poll(poll));
+                    std::regex emoji_regex(R"(<a?:([a-zA-Z0-9_]+):(\d+)>)");
+                    std::smatch match;
+                    if (std::regex_match(emoji, match, emoji_regex)) {
+                        temp.name = match[1];
+                        temp.id = dpp::snowflake(std::string(match[2]));
+                        if(emoji[1] == 'a')
+                            temp.flags |= dpp::e_animated;
+                    }
+                    else
+                    {
+                        temp.name = emoji;
+                    }
 
-            //reply related
-            std::string expirystr = std::to_string(newPoll.duration);
-            expirystr.erase(expirystr.find_last_not_of('0') + 1, std::string::npos);
-            std::string message = ">>> **:white_check_mark: Poll Created with:**\n- **Question:** " + newPoll.title + "\n- **Expiry in:** " + expirystr + "**h**";
-            event.reply(dpp::message(message).set_flags(dpp::m_ephemeral));
+                    poll.add_answer(answer, temp);
+                }
+                cp_bot.message_create(dpp::message(event.command.channel_id, "").set_poll(poll));
+                event.reply(dpp::message("> **:white_check_mark: Poll Created.**").set_flags(dpp::m_ephemeral));
+            }
+        
             return;
+        
         }else if (subCommand == "list")
         {
+
             event.reply(dpp::message("list").set_flags(dpp::m_ephemeral));
             return;
+        
         }else if (subCommand == "delete")
         {
+        
             event.reply(dpp::message("delete").set_flags(dpp::m_ephemeral));
             return;
+
         }
 
 
         Date today = advanced::GetActualDate();
-
         std::string message = "[ " + std::to_string(today.day) + " / " + std::to_string(today.month) + " / " + std::to_string(today.year) + "   |   " + std::to_string(today.hour) + " : " + std::to_string(today.minute) + " ]\nday of the week: " + std::to_string(today.dayOfWeek);
-
-        /*dpp::poll poll;
-        poll.question.text = "test";
-        poll.expiry = 336.0;
-
-        poll.add_answer("test2", "🍔");
-        poll.add_answer("test2", "🍗");
-        poll.add_answer("test1", "🍕");
-        poll.add_answer("autre", "🤔");
-        poll.add_answer("nah", "🚫");*/
 
         event.reply(dpp::message(message).set_flags(dpp::m_ephemeral));
         

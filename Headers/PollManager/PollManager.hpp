@@ -3,7 +3,8 @@
 class PollManager
 {
 public:
-	void Add(PollData _poll);
+	PollManager(){}
+	void Add(PollData _poll, uint64_t guildId, uint64_t channelId);
 	void Update();
 	void Load();
 private:

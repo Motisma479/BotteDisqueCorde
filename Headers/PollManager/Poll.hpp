@@ -14,7 +14,7 @@ public:
 
 	void SetDueDate(Date _dueDate);
 	Date GetDueDate();
-	bool shouldRepeat;
+	bool shouldRepeat = false;
 private:
 	Date dueDate;
 	int GetWeekDay(int _day, int _month, int _year);

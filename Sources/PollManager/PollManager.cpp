@@ -1,6 +1,6 @@
 #include "PollManager/PollManager.hpp"
 
-void PollManager::Add(PollData _poll)
+void PollManager::Add(PollData _poll, uint64_t guildId, uint64_t channelId)
 {
 
 }
