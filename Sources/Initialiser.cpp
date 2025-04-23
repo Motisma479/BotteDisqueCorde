@@ -44,6 +44,17 @@ Data::Data()
 			}
 			stopMachine = false;
 		}
+		else if (!param.compare("PRESSENCE_MESSAGE:"))
+		{
+			std::string message;
+			std::getline(stream,message);
+			if (!message.empty() && message[1] == '\"' && message.back() == '\"')
+			{
+				message = message.substr(2, message.length() - 3);
+			}
+
+			pressenceMessage = message;
+		}
 		//else if (!param.compare("MAX_SUS_IMAGES:"))
 		//	stream >> maxSusImages;
 	}
@@ -102,4 +113,25 @@ const std::vector<std::filesystem::path>& Data::GetMemeImages()
 const bool& Data::GetStopMachine()
 {
 	return stopMachine;
+}
+const std::string& Data::GetPressenceMessage()
+{
+	return pressenceMessage;
+}
+
+void Data::SetPressenceMessage(std::string message)
+{
+	pressenceMessage = message;
+	Save();
+}
+
+void Data::Save()
+{
+	std::ofstream file("settings.ini");
+	if(file.is_open())
+	{	
+		file << "STOP_THE_MACHINE_ON_COMMAND: " << (stopMachine ? "true" : "false") << '\n';
+		file << "PRESSENCE_MESSAGE: \"" << pressenceMessage << '\"';
+		file.close();
+	}
 }

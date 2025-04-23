@@ -26,23 +26,5 @@ void Commands::Ping::Execute(const dpp::slashcommand_t& event)
             std::string after = "**:ping_pong:Pong!**\n▬▬▬▬▬▬▬▬▬▬\n> **latency:**\n> " + std::to_string(latency_ms) + " **ms**" + "\n▬▬▬▬▬▬▬▬▬▬\n> **API:**\n> " + std::to_string(api_ms) + " **ms**";;
             event.edit_original_response(dpp::message(after));
         });
-        /*
-        date today = advanced::GetActualDate();
-
-        std::string message = "[ " + std::to_string(today.day) + " / " + std::to_string(today.month) + " / " + std::to_string(today.year) + "   |   " + std::to_string(today.hour) + " : " + std::to_string(today.minute) + " ]\nday of the week: " + std::to_string(today.dayOfWeek);
-
-        dpp::poll poll;
-        poll.question.text = "test";
-        poll.expiry = 18.0;
-
-        poll.add_answer("test2", "🍔");
-        poll.add_answer("test2", "🍗");
-        poll.add_answer("test1", "🍕");
-        poll.add_answer("autre", "🤔");
-        poll.add_answer("nah", "🚫");
-
-        cp_bot.message_create(dpp::message(event.command.channel_id, message).set_poll(poll));
-        event.reply(dpp::message("poll created").set_flags(dpp::m_ephemeral));
-        */
     }
 }

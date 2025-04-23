@@ -32,6 +32,7 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Meme>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Ping>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Poll>(bot, data));
+    CommandList.push_back(std::make_unique<Commands::Pressence>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Reload>(bot, data, CommandList));
     CommandList.push_back(std::make_unique<Commands::Say>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Stop>(bot, data));
@@ -46,6 +47,8 @@ int main()
     });
 
     bot.on_ready([](const dpp::ready_t& event) {
+        bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_custom, data.GetPressenceMessage()));
+
         bot.global_commands_get([&](const dpp::confirmation_callback_t& callback) {
             std::vector<std::pair<std::string,uint64_t>> existingCommand;
 
