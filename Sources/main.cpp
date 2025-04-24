@@ -22,11 +22,9 @@ dpp::cluster bot(BOT_TOKEN);
 std::vector<std::unique_ptr<Commands::ICommand>> CommandList;
 
 Data data;
-PollManager pollManager;
+PollManager pollManager(bot);
 int main()
 {
-    pollManager.Load();
-
     CommandList.push_back(std::make_unique<Commands::Amogus>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Clear>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Dice>(bot, data));
@@ -116,7 +114,7 @@ int main()
     });
 
     /* Start the bot */    
-    bot.start(static_cast<dpp::start_type>(false));
+    bot.start(static_cast<dpp::start_type>(true));
     while (true)
     {
         pollManager.Update();

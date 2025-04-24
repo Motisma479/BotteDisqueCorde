@@ -10,3 +10,8 @@ struct Date
 
 	int dayOfWeek = -1;
 };
+
+inline bool operator >= (const Date& dateA, const Date& dateB)
+{
+	return dateA.day >= dateB.day && dateA.month >= dateB.month && dateA.year >= dateB.year && dateA.hour >= dateB.hour && dateA.minute >= dateB.minute;
+}

@@ -1,8 +1,8 @@
 #include "advancedFunction.hpp"
 #include <fstream>
 #include <sstream>
-#include <iostream>
 #include <ctime>
+#include <iomanip>
 
 bool advanced::CheckSuperAdminID(const uint64_t id)
 {
@@ -36,5 +36,26 @@ Date advanced::GetActualDate()
 	result.hour = now->tm_hour;
 
 	result.minute = now->tm_min;
+	return result;
+}
+
+Date advanced::ParseDateTime(const std::string& _input)
+{
+	std::tm temp = {};
+	std::istringstream ss(_input);
+	ss >> std::get_time(&temp, "%Y-%m-%d %H:%M");
+
+	if (ss.fail()) {
+		throw std::runtime_error("Failed to parse datetime string");
+	}
+
+	Date result;
+	result.day = temp.tm_mday;
+	result.month = temp.tm_mon + 1;
+	result.year = temp.tm_year + 1900;
+
+	result.hour = temp.tm_hour;
+	result.minute = temp.tm_min;
+
 	return result;
 }

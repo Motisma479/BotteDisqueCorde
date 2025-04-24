@@ -12,7 +12,6 @@ namespace Commands
 		void Init(bool registerCommand);
 		void Execute(const dpp::slashcommand_t& event);
 	private:
-		Date ParseDateTime(const std::string& _input);
 		PollManager& pollManager;
 	};
 }
