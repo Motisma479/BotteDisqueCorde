@@ -12,7 +12,7 @@ Commands::Poll::Poll(dpp::cluster& bot, Data& data, PollManager& manager) : ICom
 
 void Commands::Poll::Init(bool registerCommand)
 {
-    if (/*registerCommand &&*/ dpp::run_once<struct register_bot_commands>()) {
+    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
         dpp::slashcommand newcommand("poll", "Schedule a poll.", cp_bot.me.id);
         newcommand.set_default_permissions(dpp::p_administrator).
             add_option(

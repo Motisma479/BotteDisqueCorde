@@ -37,6 +37,7 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Reload>(bot, data, CommandList));
     CommandList.push_back(std::make_unique<Commands::Say>(bot, data));
     CommandList.push_back(std::make_unique<Commands::Stop>(bot, data));
+    CommandList.push_back(std::make_unique<Commands::SuperAdmin>(bot, data));
 
     bot.on_log(dpp::utility::cout_logger());
     

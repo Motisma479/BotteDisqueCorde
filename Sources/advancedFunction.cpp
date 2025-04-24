@@ -6,16 +6,18 @@
 
 bool advanced::CheckSuperAdminID(const uint64_t id)
 {
-	std::ifstream AdmId;
+	static std::ifstream AdmId;
 	AdmId.open("superAdminId");
 	for (std::string line; std::getline(AdmId, line); )
 	{
 		if (line.size() <= 1) continue;
 		else if (!line.compare(std::to_string(id)))
 		{
+			AdmId.close();
 			return true;
 		}
 	}
+	AdmId.close();
 	return false;
 }
 
