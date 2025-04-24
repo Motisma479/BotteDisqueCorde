@@ -26,7 +26,10 @@ Date advanced::GetActualDate()
 	Date result;
 
 	std::time_t t = std::time(nullptr);
-	std::tm* now = std::localtime(&t);
+	//std::tm* now = std::localtime(&t);
+	std::tm* now = std::gmtime(&t);
+	now->tm_hour += 1;
+	std::mktime(now);
 
 	result.day = now->tm_mday;
 	result.dayOfWeek = now->tm_wday;
