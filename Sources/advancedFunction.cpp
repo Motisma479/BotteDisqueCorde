@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <ctime>
+#include <chrono>
 #include <iomanip>
 
 bool advanced::CheckSuperAdminID(const uint64_t id)
@@ -25,22 +26,27 @@ Date advanced::GetActualDate()
 {
 	Date result;
 
-	std::time_t t = std::time(nullptr);
-	//std::tm* now = std::localtime(&t);
-	std::tm* now = std::gmtime(&t);
-	now->tm_hour += 1;
-	std::mktime(now);
+	auto now_utc = std::chrono::system_clock::now();
+	auto tz = std::chrono::locate_zone("Europe/Paris");
+	std::chrono::zoned_time zt{ tz, now_utc };
 
-	result.day = now->tm_mday;
-	result.dayOfWeek = now->tm_wday;
+	auto local_tp = zt.get_local_time();
 
-	result.month = now->tm_mon + 1;
+	auto local_days = floor<std::chrono::days>(local_tp);
+	std::chrono::year_month_day ymd{ local_days };
+	std::chrono::hh_mm_ss hms{ local_tp - local_days };
+	std::chrono::weekday wd{ local_days };
 
-	result.year = now->tm_year + 1900;
+	result.day = unsigned(ymd.day());
+	result.dayOfWeek = wd.iso_encoding();
 
-	result.hour = now->tm_hour;
+	result.month = unsigned(ymd.month());
 
-	result.minute = now->tm_min;
+	result.year = int(ymd.year());
+
+	result.hour = hms.hours().count();
+
+	result.minute = hms.minutes().count();
 	return result;
 }
 
