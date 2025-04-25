@@ -33,14 +33,11 @@ PollData::PollData()
 
 int PollData::GetWeekDay(int day, int month, int year)
 {
-    std::tm time_in = {};
-    time_in.tm_year = year - 1900;
-    time_in.tm_mon = month - 1;
-    time_in.tm_mday = day;
+    std::chrono::year_month_day ymd{ std::chrono::year(year), std::chrono::month(month), std::chrono::day(day) };
+    std::chrono::sys_days sd(ymd);
+    std::chrono::weekday wd(sd);
 
-    std::mktime(&time_in);
-
-    return time_in.tm_wday;
+    return wd.iso_encoding();
 }
 
 void PollData::SetDueDate(Date _dueDate)
