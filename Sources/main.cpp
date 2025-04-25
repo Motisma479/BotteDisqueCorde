@@ -50,6 +50,11 @@ int main()
 
     bot.on_ready([](const dpp::ready_t& event) {
         bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_custom, data.GetPressenceMessage()));
+        bot.start_timer([&](dpp::timer)
+        {
+            pollManager.Update();
+        }, 1);
+
 
         bot.global_commands_get([&](const dpp::confirmation_callback_t& callback) {
             std::vector<std::pair<std::string,uint64_t>> existingCommand;
@@ -105,20 +110,13 @@ int main()
         if (event.custom_id == "del")
         {
             //do not work may need a rework.
-
             //auto a = event.command.msg;
-
             //event.edit_response(dpp::message("command canceled...").set_flags(dpp::m_ephemeral));
-            
             //bot.message_delete(event.command.message_id, event.command.channel_id);
         }
     });
 
     /* Start the bot */    
-    bot.start(static_cast<dpp::start_type>(true));
-    while (true)
-    {
-        pollManager.Update();
-    }
+    bot.start(dpp::st_wait);
     return 0;
 }
