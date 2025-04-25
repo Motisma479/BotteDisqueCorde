@@ -19,8 +19,8 @@ private:
 	int saveHour = 0;
 	std::vector<int> deleteList;
 
-	int updateFrame = 20;
-	int frame = 0;
+	/*int updateFrame = 20;
+	int frame = 0;*/
 	Date oldDate;
 
 	dpp::cluster& bot;

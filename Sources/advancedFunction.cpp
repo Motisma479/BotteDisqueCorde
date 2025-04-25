@@ -7,7 +7,7 @@
 
 bool advanced::CheckSuperAdminID(const uint64_t id)
 {
-	static std::ifstream AdmId;
+	std::ifstream AdmId;
 	AdmId.open("superAdminId");
 	for (std::string line; std::getline(AdmId, line); )
 	{

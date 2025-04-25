@@ -37,12 +37,12 @@ int PollManager::Delete(uint16_t _pollId, uint64_t _channelId)
 }
 void PollManager::Update()
 {
-	if (frame < updateFrame) //update every updateFrame
-	{
-		frame++;
-		return;
-	}
-	frame = 0;
+	//if (frame < updateFrame) //update every updateFrame
+	//{
+	//	frame++;
+	//	return;
+	//}
+	//frame = 0;
 
 	Date actualDate = advanced::GetActualDate();
 

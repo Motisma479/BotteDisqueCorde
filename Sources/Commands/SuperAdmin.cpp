@@ -23,7 +23,11 @@ void Commands::SuperAdmin::Execute(const dpp::slashcommand_t& event)
     if (event.command.get_command_name() == "super_admin") {
         const std::string subCommand = event.command.get_command_interaction().options[0].name;
         
-        if(!advanced::CheckSuperAdminID(event.command.get_issuing_user().id)) event.reply(dpp::message("Only super admin can use that command.").set_flags(dpp::m_ephemeral));
+        if (!advanced::CheckSuperAdminID(event.command.get_issuing_user().id))
+        {
+            event.reply(dpp::message("Only super admin can use that command.").set_flags(dpp::m_ephemeral));
+            return;
+        }
 
         std::vector<dpp::snowflake> ids;
         std::ifstream AdmIds;
