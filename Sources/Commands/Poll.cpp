@@ -18,12 +18,12 @@ void Commands::Poll::Init(bool registerCommand)
             add_option(
                 dpp::command_option(dpp::co_sub_command, "add", "register a new Poll to the current chanel").
                 add_option(dpp::command_option(dpp::co_string, "question", "The poll question.", true).set_max_length(300)).
-                add_option(dpp::command_option(dpp::co_number, "expiry", "The life of the poll in hours.", true).set_min_value(1.0).set_max_value(336.0)).
+                add_option(dpp::command_option(dpp::co_number, "life", "The life of the poll in hours.", true).set_min_value(1.0).set_max_value(336.0)).
                 
                 add_option(dpp::command_option(dpp::co_string, "answer_1", "The answer 1.", true)).
                 add_option(dpp::command_option(dpp::co_string, "answer_2", "The answer 2.", true)).
 
-                add_option(dpp::command_option(dpp::co_string, "date", "The date the poll will be sent. use the format YYYY-MM-DD HH:MM.", false)).
+                add_option(dpp::command_option(dpp::co_string, "date", "The date the poll will be sent. use the format DD-MM-YYYY HH:MM.", false)).
                 add_option(dpp::command_option(dpp::co_boolean, "should_repeat", "On true send the poll every week. need to define a date first.", false)).
 
                 add_option(dpp::command_option(dpp::co_string, "answer_3", "The answer 3.", false).set_max_length(55)).
@@ -104,7 +104,7 @@ void Commands::Poll::Execute(const dpp::slashcommand_t& event)
         
         if (subCommand == "add")
         {
-            PollData newPoll(std::get<std::string>(event.get_parameter("question")), std::get<double>(event.get_parameter("expiry")));
+            PollData newPoll(std::get<std::string>(event.get_parameter("question")), std::get<double>(event.get_parameter("life")));
 
             for (int i = 1; i < 10; i++)
             {
@@ -155,7 +155,7 @@ void Commands::Poll::Execute(const dpp::slashcommand_t& event)
                 std::string expirystr = std::to_string(newPoll.duration);
                 expirystr.erase(expirystr.find_last_not_of('0') + 1, std::string::npos);
                 std::string message = ">>> **:white_check_mark: Poll Created with:**\n- **Question:** " + newPoll.title +
-                    "\n- **Expiry in:** " + expirystr + "**h**" +
+                    "\n- **Life:** " + expirystr + "**h**" +
                     "\n- **Due date:** " + datestr +
                     "\n- **Will repeat:** " + (newPoll.shouldRepeat?"true":"false") + "\n- **answer: **\n";
                 for (const auto [answer, emoji] : newPoll.answers)
@@ -196,22 +196,24 @@ void Commands::Poll::Execute(const dpp::slashcommand_t& event)
                 event.reply(dpp::message("> **:white_check_mark: Poll Created.**").set_flags(dpp::m_ephemeral));
             }
         
-        }else if (subCommand == "list")
+        }
+        else if (subCommand == "list")
         {
             Date today = advanced::GetActualDate();
-            std::string message = ">>> **Current time: [ " + std::to_string(today.day) + " / " + std::to_string(today.month) + " / " + std::to_string(today.year) + "   |   " + std::to_string(today.hour) + " : " + std::to_string(today.minute) + " ]   day of the week: " + std::to_string(today.dayOfWeek) + "**\n\n";
+            std::string message = ">>> **Current time: [ " + (today.day < 10 ? ("0" + std::to_string(today.day)) : std::to_string(today.day)) + " / " + (today.month < 10 ? ("0" + std::to_string(today.month)) : std::to_string(today.month)) + " / " + std::to_string(today.year) + "   |   " + (today.hour < 10 ? ("0" + std::to_string(today.hour)) : std::to_string(today.hour)) + " : " + (today.minute < 10 ? ("0" + std::to_string(today.minute)) : std::to_string(today.minute)) + " ]   day of the week: " + std::to_string(today.dayOfWeek) + "**\n\n";
             
             for (const auto& data : pollManager.List(event.command.channel_id))
             {
                 message += '`' + data.title + "`\n";
                 Date d = data.GetDueDate();
                 message += "- **ID: " + std::to_string(data.id) + (data.shouldRepeat ? "   Day of week: " +
-                    std::to_string(d.dayOfWeek) : "   Date: " + std::to_string(d.year) + '-' + (d.month < 10 ? ("0" + std::to_string(d.month)) : std::to_string(d.month)) + '-' + (d.day < 10 ? ("0" + std::to_string(d.day)) : std::to_string(d.day)) + ' ' + (d.hour < 10 ? ("0" + std::to_string(d.hour)) : std::to_string(d.hour)) + ':' + (d.minute < 10 ? ("0" + std::to_string(d.minute)) : std::to_string(d.minute))) + "**\n\n";
+                    std::to_string(d.dayOfWeek) : "   Date: " + (d.day < 10 ? ("0" + std::to_string(d.day)) : std::to_string(d.day)) + '-' + (d.month < 10 ? ("0" + std::to_string(d.month)) : std::to_string(d.month)) + '-' + std::to_string(d.year) + ' ' + (d.hour < 10 ? ("0" + std::to_string(d.hour)) : std::to_string(d.hour)) + ':' + (d.minute < 10 ? ("0" + std::to_string(d.minute)) : std::to_string(d.minute))) + "**\n\n";
             }
 
             event.reply(dpp::message(message).set_flags(dpp::m_ephemeral));
 
-        }else if (subCommand == "delete")
+        }
+        else if (subCommand == "delete")
         {
             uint16_t id = static_cast<uint16_t>(std::get<int64_t>(event.get_parameter("id")));//should be "safe" since the user cant send overflowing value;
             switch (pollManager.Delete(id, event.command.channel_id))

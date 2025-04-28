@@ -54,7 +54,7 @@ Date advanced::ParseDateTime(const std::string& _input)
 {
 	std::tm temp = {};
 	std::istringstream ss(_input);
-	ss >> std::get_time(&temp, "%Y-%m-%d %H:%M");
+	ss >> std::get_time(&temp, "%d-%m-%Y %H:%M");
 
 	if (ss.fail()) {
 		throw std::runtime_error("Failed to parse datetime string");
