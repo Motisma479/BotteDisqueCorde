@@ -7,9 +7,9 @@ namespace Commands
 	class Amogus : public ICommand
 	{
 	public:
-		Amogus(dpp::cluster& bot, Data& data);
+		Amogus(const char* _name, dpp::cluster& bot, Data& data);
 
-		void Init(bool registerCommand);
+		void Init(bool registerCommand, uint64_t _commandId);
 		void Execute(const dpp::slashcommand_t& event);
 		void Reload();
 	private:

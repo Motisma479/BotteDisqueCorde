@@ -1,14 +1,11 @@
 #include "Commands/Invite.hpp"
 
-Commands::Invite::Invite(dpp::cluster& bot, Data& data) : ICommand(bot, data)
-{
-    name = "invite";
-}
+Commands::Invite::Invite(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data) {}
 
-void Commands::Invite::Init(bool registerCommand)
+void Commands::Invite::Init(bool registerCommand, uint64_t _commandId)
 {
     if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand("invite", "invite a user to play some game", cp_bot.me.id);
+        dpp::slashcommand newcommand(name, "invite a user to play some game", cp_bot.me.id);
         newcommand.add_option(
             dpp::command_option(dpp::co_string, "game", "The game to play", true).
             add_choice(dpp::command_option_choice("chess", std::string("game_chess")))
@@ -21,7 +18,7 @@ void Commands::Invite::Init(bool registerCommand)
 
 void Commands::Invite::Execute(const dpp::slashcommand_t& event)
 {
-    if (event.command.get_command_name() == "invite") {
+    if (event.command.get_command_name() == name) {
 
         std::string game = std::get<std::string>(event.get_parameter("game"));
         dpp::snowflake invitated_id = std::get<dpp::snowflake>(event.get_parameter("user"));

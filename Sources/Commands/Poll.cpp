@@ -5,15 +5,12 @@
 #include <codecvt>
 
 
-Commands::Poll::Poll(dpp::cluster& bot, Data& data, PollManager& manager) : ICommand(bot, data), pollManager(manager)
-{
-    name = "poll";
-}
+Commands::Poll::Poll(const char* _name, dpp::cluster& bot, Data& data, PollManager& manager) : ICommand(_name, bot, data), pollManager(manager) {}
 
-void Commands::Poll::Init(bool registerCommand)
+void Commands::Poll::Init(bool registerCommand, uint64_t _commandId)
 {
     if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand("poll", "Schedule a poll.", cp_bot.me.id);
+        dpp::slashcommand newcommand(name, "Schedule a poll.", cp_bot.me.id);
         newcommand.set_default_permissions(dpp::p_administrator).
             add_option(
                 dpp::command_option(dpp::co_sub_command, "add", "register a new Poll to the current chanel").
@@ -99,7 +96,7 @@ bool IsAnEmoji(const std::string& input) {
 
 void Commands::Poll::Execute(const dpp::slashcommand_t& event)
 {
-    if (event.command.get_command_name() == "poll") {
+    if (event.command.get_command_name() == name) {
         const std::string subCommand = event.command.get_command_interaction().options[0].name;
         
         if (subCommand == "add")

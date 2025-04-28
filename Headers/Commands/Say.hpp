@@ -7,8 +7,8 @@ namespace Commands
 	class Say : public ICommand
 	{
 	public:
-		Say(dpp::cluster& bot, Data& data);
-		void Init(bool registerCommand);
+		Say(const char* _name, dpp::cluster& bot, Data& data);
+		void Init(bool registerCommand, uint64_t _commandId);
 		void Execute(const dpp::slashcommand_t& event);
 	};
 }

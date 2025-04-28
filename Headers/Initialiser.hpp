@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <filesystem>
+#include <cstdint>
 
 const std::string GetToken();
 class Data

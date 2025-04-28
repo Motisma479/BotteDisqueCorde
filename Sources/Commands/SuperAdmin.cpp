@@ -1,12 +1,12 @@
 #include "Commands/SuperAdmin.hpp"
 #include "advancedFunction.hpp"
 
-Commands::SuperAdmin::SuperAdmin(dpp::cluster& bot, Data& data) : ICommand(bot, data)
+Commands::SuperAdmin::SuperAdmin(const char* _name, dpp::cluster & bot, Data& data) : ICommand(_name, bot, data)
 {
     name = "super_admin";
 }
 
-void Commands::SuperAdmin::Init(bool registerCommand)
+void Commands::SuperAdmin::Init(bool registerCommand, uint64_t _commandId)
 {
     if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
         dpp::slashcommand newcommand("super_admin", "Super Admin management!", cp_bot.me.id);

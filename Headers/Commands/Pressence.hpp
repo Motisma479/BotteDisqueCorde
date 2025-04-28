@@ -6,9 +6,9 @@ namespace Commands
 	class Pressence : public ICommand
 	{
 	public:
-		Pressence(dpp::cluster& bot, Data& data);
+		Pressence(const char* _name, dpp::cluster& bot, Data& data);
 
-		void Init(bool registerCommand);
+		void Init(bool registerCommand, uint64_t _commandId);
 		void Execute(const dpp::slashcommand_t& event);
 	};
 }

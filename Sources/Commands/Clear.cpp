@@ -2,9 +2,8 @@
 
 dpp::cluster* _bot;
 
-Commands::Clear::Clear(dpp::cluster& bot, Data& data) : ICommand(bot, data)
+Commands::Clear::Clear(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data)
 {
-    name = "clear";
     _bot = &bot;
 }
 
@@ -25,10 +24,10 @@ void callback(const dpp::confirmation_callback_t& event)
     return;
 }
 
-void Commands::Clear::Init(bool registerCommand)
+void Commands::Clear::Init(bool registerCommand, uint64_t _commandId)
 {
     if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand("clear", "clear the chanel", cp_bot.me.id);
+        dpp::slashcommand newcommand(name, "clear the chanel", cp_bot.me.id);
         newcommand.add_option(
             dpp::command_option(dpp::co_integer, "count", "the number of message to delete", false)
         );
@@ -38,7 +37,7 @@ void Commands::Clear::Init(bool registerCommand)
 
 void Commands::Clear::Execute(const dpp::slashcommand_t& event)
 {
-    if (event.command.get_command_name() == "clear") {
+    if (event.command.get_command_name() == name) {
         int value;
         if (event.get_parameter("count").index() <= 0)
             value = 1;

@@ -1,14 +1,11 @@
 #include "Commands/Pressence.hpp"
 
-Commands::Pressence::Pressence(dpp::cluster& bot, Data& data) : ICommand(bot, data)
-{
-    name = "pressence";
-}
+Commands::Pressence::Pressence(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data) {}
 
-void Commands::Pressence::Init(bool registerCommand)
+void Commands::Pressence::Init(bool registerCommand, uint64_t _commandId)
 {
     if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand("pressence", "Change the pressence of the bot.", cp_bot.me.id);
+        dpp::slashcommand newcommand(name, "Change the pressence of the bot.", cp_bot.me.id);
         newcommand.add_option(dpp::command_option(dpp::co_string, "message", "The pressence message.", false));
         cp_bot.global_command_create(newcommand);
     }
@@ -16,7 +13,7 @@ void Commands::Pressence::Init(bool registerCommand)
 
 void Commands::Pressence::Execute(const dpp::slashcommand_t& event)
 {
-    if (event.command.get_command_name() == "pressence") {
+    if (event.command.get_command_name() == name) {
         if (std::holds_alternative<std::string>(event.get_parameter("message")))
         {
             std::string m = std::get<std::string>(event.get_parameter("message"));

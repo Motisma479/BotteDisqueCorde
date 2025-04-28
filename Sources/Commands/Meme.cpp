@@ -1,22 +1,21 @@
 ﻿#include "Commands/Meme.hpp"
 
-Commands::Meme::Meme(dpp::cluster& bot, Data& data) : ICommand(bot, data)
+Commands::Meme::Meme(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data)
 {
-    name = "meme";
     rng.seed(time(NULL));
     memeGenerator = std::uniform_int_distribution<int>(0, data.GetMemeImages().size() - 1);
 }
 
-void Commands::Meme::Init(bool registerCommand)
+void Commands::Meme::Init(bool registerCommand, uint64_t _commandId)
 {
     if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        cp_bot.global_command_create(dpp::slashcommand("meme", "Send a meme.", cp_bot.me.id));
+        cp_bot.global_command_create(dpp::slashcommand(name, "Send a meme.", cp_bot.me.id));
     }
 }
 
 void Commands::Meme::Execute(const dpp::slashcommand_t& event)
 {
-    if (event.command.get_command_name() == "meme") {
+    if (event.command.get_command_name() == name) {
         dpp::message temp;
 
         int index = lastRandom;

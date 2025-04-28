@@ -1,22 +1,22 @@
 #include "Commands/Reload.hpp"
 
-Commands::Reload::Reload(dpp::cluster& bot, Data& data, std::vector<std::unique_ptr<Commands::ICommand>>& CommandList) : ICommand(bot, data), CommandList(CommandList)
-{
-    name = "reload";
-}
+Commands::Reload::Reload(const char* _name, dpp::cluster& bot, Data& data, std::vector<std::unique_ptr<Commands::ICommand>>& CommandList) : ICommand(_name, bot, data), CommandList(CommandList) {}
 
-void Commands::Reload::Init(bool registerCommand)
+void Commands::Reload::Init(bool registerCommand, uint64_t _commandId)
 {
+    //bot.global_command_delete(id);
     if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand("reload", "reload the bot data.", cp_bot.me.id);
+        dpp::slashcommand newcommand(name, "reload the bot data.", cp_bot.me.id);
         newcommand.set_default_permissions(dpp::p_administrator);
+        newcommand.add_option(dpp::command_option(dpp::co_string, "command", "[superAdmin] force reload a specifique command ( not done by default command ).",false));
+
         cp_bot.global_command_create(newcommand);
     }
 }
 
 void Commands::Reload::Execute(const dpp::slashcommand_t& event)
 {
-    if (event.command.get_command_name() == "reload") {
+    if (event.command.get_command_name() == name) {
         auto start_time = std::chrono::high_resolution_clock::now();
         cp_data.Reload();
         for (int i = 0; i < CommandList.size(); i++)

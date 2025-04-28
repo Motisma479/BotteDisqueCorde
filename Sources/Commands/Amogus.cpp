@@ -1,23 +1,21 @@
 ﻿#include "Commands/Amogus.hpp"
 
-Commands::Amogus::Amogus(dpp::cluster& bot, Data& data) : ICommand(bot, data)
+Commands::Amogus::Amogus(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data)
 {
-    name = "amogus";
-
     rng.seed(time(NULL));
     AMOGUSGenerator = std::uniform_int_distribution<int>(0, data.GetSusImages().size() - 1);
 }
 
-void Commands::Amogus::Init(bool registerCommand)
+void Commands::Amogus::Init(bool registerCommand, uint64_t _commandId)
 {
     if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        cp_bot.global_command_create(dpp::slashcommand("amogus", "did you say AMOGUS?", cp_bot.me.id));
+        cp_bot.global_command_create(dpp::slashcommand(name, "did you say AMOGUS?", cp_bot.me.id));
     }
 }
 
 void Commands::Amogus::Execute(const dpp::slashcommand_t& event)
 {
-    if (event.command.get_command_name() == "amogus") {
+    if (event.command.get_command_name() == name) {
         dpp::message temp;
 
         int index = lastRandom;

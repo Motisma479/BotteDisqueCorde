@@ -6,8 +6,8 @@ namespace Commands
 	class Clear : public ICommand
 	{
 	public:
-		Clear(dpp::cluster& bot, Data& data);
-		void Init(bool registerCommand);
+		Clear(const char* _name, dpp::cluster& bot, Data& data);
+		void Init(bool registerCommand, uint64_t _commandId);
 		void Execute(const dpp::slashcommand_t& event);
 	};
 }
