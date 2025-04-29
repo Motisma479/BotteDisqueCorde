@@ -109,12 +109,13 @@ void Commands::Poll::Execute(const dpp::slashcommand_t& event)
         {
             PollData newPoll(std::get<std::string>(event.get_parameter("question")), std::get<double>(event.get_parameter("life")));
 
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 11; i++)
             {
-                char answer[9] = "answer_x";
-                answer[7] = 48 + i;
-                char answerEmoji[15] = "answer_x_emoji";
-                answerEmoji[7] = 48 + i;
+                std::string answer = "answer_";
+
+                answer += std::to_string(i);
+
+                std::string answerEmoji = answer + "_emoji";
 
                 if (std::holds_alternative<std::string>(event.get_parameter(answer)))
                 {
