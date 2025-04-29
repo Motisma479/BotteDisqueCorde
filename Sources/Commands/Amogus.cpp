@@ -8,13 +8,20 @@ Commands::Amogus::Amogus(const char* _name, dpp::cluster& bot, Data& data) : ICo
 
 void Commands::Amogus::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        cp_bot.global_command_create(dpp::slashcommand(name, "did you say AMOGUS?", cp_bot.me.id));
+    ICommand::Init(registerCommand, _commandId);
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand(name, "did you say AMOGUS?", cp_bot.me.id);
+
+        if (registerCommand) {
+            cp_bot.global_command_create(command);
+        }
     }
 }
 
 void Commands::Amogus::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == name) {
         dpp::message temp;
 
@@ -38,7 +45,8 @@ void Commands::Amogus::Execute(const dpp::slashcommand_t& event)
     }
 }
 
-void Commands::Amogus::Reload()
+void Commands::Amogus::Reload(bool reRegister)
 {
+    ICommand::Reload(reRegister);
     AMOGUSGenerator = std::uniform_int_distribution<int>(0, cp_data.GetSusImages().size() - 1);
 }

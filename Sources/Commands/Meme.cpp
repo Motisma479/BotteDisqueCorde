@@ -8,13 +8,21 @@ Commands::Meme::Meme(const char* _name, dpp::cluster& bot, Data& data) : IComman
 
 void Commands::Meme::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        cp_bot.global_command_create(dpp::slashcommand(name, "Send a meme.", cp_bot.me.id));
+    ICommand::Init(registerCommand, _commandId);
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand(name, "Send a meme.", cp_bot.me.id);
+
+        if (registerCommand)
+        {
+            cp_bot.global_command_create(command);
+        }
     }
 }
 
 void Commands::Meme::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == name) {
         dpp::message temp;
 
@@ -36,7 +44,8 @@ void Commands::Meme::Execute(const dpp::slashcommand_t& event)
     }
 }
 
-void Commands::Meme::Reload()
+void Commands::Meme::Reload(bool reRegister)
 {
+    ICommand::Reload(reRegister);
     memeGenerator = std::uniform_int_distribution<int>(0, cp_data.GetMemeImages().size() - 1);
 }

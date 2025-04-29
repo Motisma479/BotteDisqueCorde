@@ -9,14 +9,16 @@ Commands::Poll::Poll(const char* _name, dpp::cluster& bot, Data& data, PollManag
 
 void Commands::Poll::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand(name, "Schedule a poll.", cp_bot.me.id);
-        newcommand.set_default_permissions(dpp::p_administrator).
+    ICommand::Init(registerCommand, _commandId);
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand(name, "Schedule a poll.", cp_bot.me.id);
+        command.set_default_permissions(dpp::p_administrator).
             add_option(
                 dpp::command_option(dpp::co_sub_command, "add", "register a new Poll to the current chanel").
                 add_option(dpp::command_option(dpp::co_string, "question", "The poll question.", true).set_max_length(300)).
                 add_option(dpp::command_option(dpp::co_number, "life", "The life of the poll in hours.", true).set_min_value(1.0).set_max_value(336.0)).
-                
+
                 add_option(dpp::command_option(dpp::co_string, "answer_1", "The answer 1.", true)).
                 add_option(dpp::command_option(dpp::co_string, "answer_2", "The answer 2.", true)).
 
@@ -32,7 +34,7 @@ void Commands::Poll::Init(bool registerCommand, uint64_t _commandId)
                 add_option(dpp::command_option(dpp::co_string, "answer_9", "The answer 9.", false).set_max_length(55)).
                 add_option(dpp::command_option(dpp::co_string, "answer_10", "The answer 10.", false).set_max_length(55)).
 
-                add_option(dpp::command_option(dpp::co_string, "answer_1_emoji", "An emoji for the answer 1.",false)).
+                add_option(dpp::command_option(dpp::co_string, "answer_1_emoji", "An emoji for the answer 1.", false)).
                 add_option(dpp::command_option(dpp::co_string, "answer_2_emoji", "An emoji for the answer 2.", false)).
                 add_option(dpp::command_option(dpp::co_string, "answer_3_emoji", "An emoji for the answer 3.", false)).
                 add_option(dpp::command_option(dpp::co_string, "answer_4_emoji", "An emoji for the answer 4.", false)).
@@ -43,12 +45,15 @@ void Commands::Poll::Init(bool registerCommand, uint64_t _commandId)
                 add_option(dpp::command_option(dpp::co_string, "answer_9_emoji", "An emoji for the answer 9.", false)).
                 add_option(dpp::command_option(dpp::co_string, "answer_10_emoji", "An emoji for the answer 10.", false))
 
-        ).add_option(
-            dpp::command_option(dpp::co_sub_command, "list", "List existing polls of the current chanel")
-        ).add_option(
-            dpp::command_option(dpp::co_sub_command, "delete", "Delete a poll with an id").add_option(dpp::command_option(dpp::co_integer, "id", "Poll id", true).set_min_value(0).set_max_value(65535))
-        );
-        cp_bot.global_command_create(newcommand);
+            ).add_option(
+                dpp::command_option(dpp::co_sub_command, "list", "List existing polls of the current chanel")
+            ).add_option(
+                dpp::command_option(dpp::co_sub_command, "delete", "Delete a poll with an id").add_option(dpp::command_option(dpp::co_integer, "id", "Poll id", true).set_min_value(0).set_max_value(65535))
+            );
+        if (registerCommand)
+        {
+            cp_bot.global_command_create(command);
+        }
     }
 }
 
@@ -96,6 +101,7 @@ bool IsAnEmoji(const std::string& input) {
 
 void Commands::Poll::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == name) {
         const std::string subCommand = event.command.get_command_interaction().options[0].name;
         

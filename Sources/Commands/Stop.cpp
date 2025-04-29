@@ -5,15 +5,22 @@ Commands::Stop::Stop(const char* _name, dpp::cluster& bot, Data& data) : IComman
 
 void Commands::Stop::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand(name, "stop the bot.", cp_bot.me.id);
-        newcommand.set_default_permissions(dpp::p_administrator);
-        cp_bot.global_command_create(newcommand);
+    ICommand::Init(registerCommand, _commandId);
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand(name, "stop the bot.", cp_bot.me.id);
+        command.set_default_permissions(dpp::p_administrator);
+
+        if (registerCommand)
+        {
+            cp_bot.global_command_create(command);
+        }
     }
 }
 
 void Commands::Stop::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == name) {
         dpp::message temp;
         temp.add_component(

@@ -4,17 +4,24 @@ Commands::Say::Say(const char* _name, dpp::cluster& bot, Data& data) : ICommand(
 
 void Commands::Say::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand(name, "make the bot say a message", cp_bot.me.id);
-        newcommand.add_option( dpp::command_option(dpp::co_string, "message", "The me to send", true))
-                  .add_option( dpp::command_option(dpp::co_string, "reply_id", "Reply to a message from the id", false))
-                  .set_default_permissions(dpp::p_administrator);
-        cp_bot.global_command_create(newcommand);
+    ICommand::Init(registerCommand, _commandId);
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand(name, "make the bot say a message", cp_bot.me.id);
+        command.add_option(dpp::command_option(dpp::co_string, "message", "The me to send", true))
+            .add_option(dpp::command_option(dpp::co_string, "reply_id", "Reply to a message from the id", false))
+            .set_default_permissions(dpp::p_administrator);
+        
+        if (registerCommand)
+        {
+            cp_bot.global_command_create(command);
+        }
     }
 }
 
 void Commands::Say::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == name) {
 
         dpp::message message(std::get<std::string>(event.get_parameter("message")));

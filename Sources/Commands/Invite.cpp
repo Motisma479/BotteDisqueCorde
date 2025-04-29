@@ -4,20 +4,27 @@ Commands::Invite::Invite(const char* _name, dpp::cluster& bot, Data& data) : ICo
 
 void Commands::Invite::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand(name, "invite a user to play some game", cp_bot.me.id);
-        newcommand.add_option(
+    ICommand::Init(registerCommand, _commandId);
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand(name, "invite a user to play some game", cp_bot.me.id);
+        command.add_option(
             dpp::command_option(dpp::co_string, "game", "The game to play", true).
             add_choice(dpp::command_option_choice("chess", std::string("game_chess")))
         ).add_option(
             dpp::command_option(dpp::co_user, "user", "User to play with", true)
         );
-        cp_bot.global_command_create(newcommand);
+    
+        if (registerCommand)
+        {
+            cp_bot.global_command_create(command);
+        }
     }
 }
 
 void Commands::Invite::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == name) {
 
         std::string game = std::get<std::string>(event.get_parameter("game"));

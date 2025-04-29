@@ -4,13 +4,20 @@ Commands::Ping::Ping(const char* _name, dpp::cluster& bot, Data& data) : IComman
 
 void Commands::Ping::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        cp_bot.global_command_create(dpp::slashcommand(name, "Ping pong!", cp_bot.me.id));
+    ICommand::Init(registerCommand, _commandId);
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand(name, "Ping pong!", cp_bot.me.id);
+
+        if (registerCommand) {
+            cp_bot.global_command_create(command);
+        }
     }
 }
-// #include "advancedFunction.hpp"
+
 void Commands::Ping::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == name) {
         double latency_ms = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::system_clock::now().time_since_epoch() ).count() - static_cast<long long>(event.command.get_creation_time() * 1000.0);
         auto api_start = std::chrono::steady_clock::now();

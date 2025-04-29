@@ -8,18 +8,26 @@ Commands::SuperAdmin::SuperAdmin(const char* _name, dpp::cluster & bot, Data& da
 
 void Commands::SuperAdmin::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand("super_admin", "Super Admin management!", cp_bot.me.id);
-        newcommand.set_default_permissions(dpp::p_administrator).
+    ICommand::Init(registerCommand, _commandId);
+
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand("super_admin", "Super Admin management!", cp_bot.me.id);
+        command.set_default_permissions(dpp::p_administrator).
             add_option(dpp::command_option(dpp::co_sub_command, "add", "Add a new superAdmin").add_option(dpp::command_option(dpp::co_user, "user", "the user to promote",true))).
             add_option(dpp::command_option(dpp::co_sub_command, "list", "List all the superAdmin")).
             add_option(dpp::command_option(dpp::co_sub_command, "delete", "Delete a superAdmin").add_option(dpp::command_option(dpp::co_user, "user", "the user to delete", true)));
-        cp_bot.global_command_create(newcommand);
+            
+
+        if (registerCommand) {
+            cp_bot.global_command_create(command);
+        }
     }
 }
-// #include "advancedFunction.hpp"
+
 void Commands::SuperAdmin::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == "super_admin") {
         const std::string subCommand = event.command.get_command_interaction().options[0].name;
         

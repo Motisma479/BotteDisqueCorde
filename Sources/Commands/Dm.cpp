@@ -4,17 +4,23 @@ Commands::Dm::Dm(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_n
 
 void Commands::Dm::Init(bool registerCommand, uint64_t _commandId)
 {
-    if (registerCommand && dpp::run_once<struct register_bot_commands>()) {
-        dpp::slashcommand newcommand(name, "make the bot send a dm", cp_bot.me.id);
-        newcommand.add_option(dpp::command_option(dpp::co_user, "user", "The user to send a message to", true))
+    ICommand::Init(registerCommand, _commandId);
+    if (dpp::run_once<struct register_bot_commands>())
+    {
+        command = dpp::slashcommand(name, "make the bot send a dm", cp_bot.me.id);
+        command.add_option(dpp::command_option(dpp::co_user, "user", "The user to send a message to", true))
             .add_option(dpp::command_option(dpp::co_string, "message", "the message to send", true))
             .set_default_permissions(dpp::p_administrator);
-        cp_bot.global_command_create(newcommand);
+        if (registerCommand)
+        {
+            cp_bot.global_command_create(command);
+        }
     }
 }
 
 void Commands::Dm::Execute(const dpp::slashcommand_t& event)
 {
+    ICommand::Execute(event);
     if (event.command.get_command_name() == name) {
         dpp::snowflake targetId =  std::get<dpp::snowflake>(event.get_parameter("user"));
         dpp::message message(std::get<std::string>(event.get_parameter("message")));
