@@ -70,3 +70,28 @@ Date advanced::ParseDateTime(const std::string& _input)
 
 	return result;
 }
+
+std::string advanced::GetActualClockEmoji()
+{
+	std::string output = ":clock";
+	auto now_utc = std::chrono::system_clock::now();
+	auto tz = std::chrono::locate_zone("Europe/Paris");
+	std::chrono::zoned_time zt{ tz, now_utc };
+
+	auto local_tp = zt.get_local_time();
+
+	auto local_days = floor<std::chrono::days>(local_tp);
+	std::chrono::hh_mm_ss hms{ local_tp - local_days };
+
+	int h = hms.hours().count();
+	if (h >= 13) h -= 12;
+
+	output += std::to_string(h);
+
+	int m = hms.minutes().count();
+
+	if (m >= 30) output += "30";
+
+	output += ":";
+	return output;
+}

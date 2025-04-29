@@ -67,7 +67,7 @@ void Commands::Reload::Execute(const dpp::slashcommand_t& event)
 
 
         std::ostringstream response;
-        response << ":white_check_mark: **Reload completed successfully!**\n>>> :clock3: Duration: " << duration_ms
+        response << ":white_check_mark: **Reload completed successfully!**\n>>> " + advanced::GetActualClockEmoji() + " Duration : " << duration_ms
             << " ms\n :repeat: Command Reloaded: " << CommandList.size()
             << "\n :moyai: Amogus file listed: " << cp_data.GetSusImages().size()
             << "\n :wine_glass: Meme file listed: " << cp_data.GetMemeImages().size();

@@ -203,7 +203,7 @@ void Commands::Poll::Execute(const dpp::slashcommand_t& event)
         else if (subCommand == "list")
         {
             Date today = advanced::GetActualDate();
-            std::string message = ">>> **Current time: [ " + (today.day < 10 ? ("0" + std::to_string(today.day)) : std::to_string(today.day)) + " / " + (today.month < 10 ? ("0" + std::to_string(today.month)) : std::to_string(today.month)) + " / " + std::to_string(today.year) + "   |   " + (today.hour < 10 ? ("0" + std::to_string(today.hour)) : std::to_string(today.hour)) + " : " + (today.minute < 10 ? ("0" + std::to_string(today.minute)) : std::to_string(today.minute)) + " ]   day of the week: " + std::to_string(today.dayOfWeek) + "**\n\n";
+            std::string message = ">>> " + advanced::GetActualClockEmoji() + " **Current time: [ " + (today.day < 10 ? ("0" + std::to_string(today.day)) : std::to_string(today.day)) + " / " + (today.month < 10 ? ("0" + std::to_string(today.month)) : std::to_string(today.month)) + " / " + std::to_string(today.year) + "   |   " + (today.hour < 10 ? ("0" + std::to_string(today.hour)) : std::to_string(today.hour)) + " : " + (today.minute < 10 ? ("0" + std::to_string(today.minute)) : std::to_string(today.minute)) + " ]   day of the week: " + std::to_string(today.dayOfWeek) + "**\n\n";
             
             for (const auto& data : pollManager.List(event.command.channel_id))
             {

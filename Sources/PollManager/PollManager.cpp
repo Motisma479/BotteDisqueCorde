@@ -202,7 +202,7 @@ void PollManager::Save()
 			file << "pollQuestion=" << pollData.title << '\n';
 			file << "pollDuration=" << std::to_string(pollData.duration) << '\n';
 			Date d = pollData.GetDueDate();
-			file << "pollDate=" << d.year << '-' << (d.month < 10 ? ("0" + std::to_string(d.month)) : std::to_string(d.month)) << '-' << (d.day < 10 ? ("0" + std::to_string(d.day)) : std::to_string(d.day)) << ' ' << (d.hour < 10 ? ("0" + std::to_string(d.hour)) : std::to_string(d.hour)) << ':' << (d.minute < 10 ? ("0" + std::to_string(d.minute)) : std::to_string(d.minute)) << '\n';
+			file << "pollDate=" << (d.day < 10 ? ("0" + std::to_string(d.day)) : std::to_string(d.day)) << '-' << (d.month < 10 ? ("0" + std::to_string(d.month)) : std::to_string(d.month)) << '-' << d.year << ' ' << (d.hour < 10 ? ("0" + std::to_string(d.hour)) : std::to_string(d.hour)) << ':' << (d.minute < 10 ? ("0" + std::to_string(d.minute)) : std::to_string(d.minute)) << '\n';
 			file << "pollRepeat=" << (pollData.shouldRepeat ? '1' : '0') << '\n';
 			for (const auto& [answer, emoji] : pollData.answers )
 			{
