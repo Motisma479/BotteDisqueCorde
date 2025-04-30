@@ -17,27 +17,27 @@ void MonitorIpBan::Monitor()
 void MonitorIpBan::Init()
 {
 	iInit = inotify_init();
-    if (fd == -1)
+    if (iInit == -1)
     {
         std::cerr << "Failed to initialize inotify" << std::endl;
         return;
     }
 
-    int wd = inotify_add_watch(fd, "/var/log/fail2ban.log", IN_MODIFY);
+    int wd = inotify_add_watch(iInit, "/var/log/fail2ban.log", IN_MODIFY);
     if (wd == -1)
     {
         std::cerr << "Failed to add inotify watch on file" << std::endl;
-        close(fd);
+        close(iInit);
         return;
     }
 }
 
 void MonitorIpBan::Monitor()
 {
-    int length = read(fd, buffer, sizeof(buffer));
+    int length = read(iInit, buffer, sizeof(buffer));
     if (length < 0) {
         std::cerr << "Error reading inotify events" << std::endl;
-        close(fd);
+        close(iInit);
         return;
     }
 
@@ -47,7 +47,7 @@ void MonitorIpBan::Monitor()
         // Check if the file was modified
         if (event->mask & IN_MODIFY)
         {
-            std::ifstream log(/ var / log / fail2ban.log);
+            std::ifstream log("/var/log/fail2ban.log");
             std::string line;
 
             while (std::getline(log, line)) {
