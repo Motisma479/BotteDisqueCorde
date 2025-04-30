@@ -12,7 +12,7 @@ MonitorIpBan::MonitorIpBan(dpp::cluster& _bot, Data& _data) : cp_bot(_bot), cp_d
     // Set the position to the end of the file initially
     log.seekg(0, std::ios::end);
     last_pos = log.tellg();
-    log.close;
+    log.close();
 #endif
 }
 
@@ -48,14 +48,15 @@ void MonitorIpBan::Monitor()
     for (const uint64_t& id : cp_data.GetIpBanListner())
     {
         std::shared_ptr<size_t> index = std::make_shared<size_t>(0);
-        std::function<void(const dpp::confirmation_callback_t& callback)> sendRecursive = [=](const dpp::confirmation_callback_t& callback) mutable
+        auto sendRecursive = std::make_shared<std::function<void(const dpp::confirmation_callback_t&)>>();
+        *sendRecursive = [sendRecursive, this, id, messages, index](const dpp::confirmation_callback_t& callback) mutable
             {
                 (*index)++;
                 if (*index >= messages.size()) return;
 
-                cp_bot.message_create(dpp::message(id, messages[*index]), sendRecursive);
+                cp_bot.message_create(dpp::message(id, messages[*index]), *sendRecursive);
             };
-        cp_bot.message_create(dpp::message(id, messages[*index]), sendRecursive);
+        cp_bot.message_create(dpp::message(id, messages[*index]), *sendRecursive);
     }
 
     messages.clear();
