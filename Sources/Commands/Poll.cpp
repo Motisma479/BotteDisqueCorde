@@ -211,7 +211,7 @@ void Commands::Poll::Execute(const dpp::slashcommand_t& event)
                 message += '`' + data.title + "`\n";
                 Date d = data.GetDueDate();
                 message += "- **ID: " + std::to_string(data.id) + (data.shouldRepeat ? "   Day of week: " +
-                    std::to_string(d.dayOfWeek) : "   Date: " + (d.day < 10 ? ("0" + std::to_string(d.day)) : std::to_string(d.day)) + '-' + (d.month < 10 ? ("0" + std::to_string(d.month)) : std::to_string(d.month)) + '-' + std::to_string(d.year) + ' ' + (d.hour < 10 ? ("0" + std::to_string(d.hour)) : std::to_string(d.hour)) + ':' + (d.minute < 10 ? ("0" + std::to_string(d.minute)) : std::to_string(d.minute))) + "**\n\n";
+                    std::to_string(d.dayOfWeek) + " [ " + (d.hour < 10 ? ("0" + std::to_string(d.hour)) : std::to_string(d.hour)) + ':' + (d.minute < 10 ? ("0" + std::to_string(d.minute)) : std::to_string(d.minute)) + " ]" : "   Date: " + (d.day < 10 ? ("0" + std::to_string(d.day)) : std::to_string(d.day)) + '-' + (d.month < 10 ? ("0" + std::to_string(d.month)) : std::to_string(d.month)) + '-' + std::to_string(d.year) + ' ' + (d.hour < 10 ? ("0" + std::to_string(d.hour)) : std::to_string(d.hour)) + ':' + (d.minute < 10 ? ("0" + std::to_string(d.minute)) : std::to_string(d.minute))) + "**\n\n";
             }
 
             event.reply(dpp::message(message).set_flags(dpp::m_ephemeral));

@@ -36,7 +36,7 @@ void Commands::Dice::Execute(const dpp::slashcommand_t& event)
                 value = 1;
         }
         std::uniform_int_distribution<int> diceGenerator(1, value);
-        std::string temp = std::to_string(diceGenerator(rng));
+        std::string temp = ":game_die:: **" + std::to_string(diceGenerator(rng)) + "**";
         event.reply(temp);
     }
 }
