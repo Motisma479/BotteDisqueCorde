@@ -27,7 +27,6 @@ PollManager pollManager(bot);
 MonitorIpBan monitorIpBan(bot, data);
 int main()
 {
-    monitorIpBan.Init();
     CommandList.push_back(std::make_unique<Commands::Amogus>("amogus", bot, data));
     CommandList.push_back(std::make_unique<Commands::Clear>("clear", bot, data));
     CommandList.push_back(std::make_unique<Commands::Dice>("dice", bot, data));

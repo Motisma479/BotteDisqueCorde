@@ -1,77 +1,57 @@
 #include "MonitorIpBan.hpp"
 
-MonitorIpBan::MonitorIpBan(dpp::cluster& _bot, Data& _data) : cp_bot(_bot), cp_data(_data) {}
-
+MonitorIpBan::MonitorIpBan(dpp::cluster& _bot, Data& _data) : cp_bot(_bot), cp_data(_data)
+{
 #if(WIN32)
-void MonitorIpBan::Init()
-{
-
-}
-
-void MonitorIpBan::Monitor()
-{
-
-}
 #else
-#include <sys/inotify.h>
-#include <fcntl.h>
-void MonitorIpBan::Init()
-{
-	iInit = inotify_init();
-    if (iInit == -1)
-    {
-        std::cerr << "Failed to initialize inotify" << std::endl;
+    logfile_path = logfile;
+    log.open(logfile_path, std::ios::in);
+    if (!log.is_open()) {
+        std::cerr << "Failed to open log file!" << std::endl;
         return;
     }
-    fcntl(iInit, F_SETFL, O_NONBLOCK);
-
-    int wd = inotify_add_watch(iInit, "/var/log/fail2ban.log", IN_MODIFY);
-    if (wd == -1)
-    {
-        std::cerr << "Failed to add inotify watch on file" << std::endl;
-        close(iInit);
-        return;
-    }
+    // Set the position to the end of the file initially
+    log.seekg(0, std::ios::end);
+    last_pos = log.tellg();
+#endif
 }
 
 void MonitorIpBan::Monitor()
 {
-    int length = read(iInit, buffer, sizeof(buffer));
-    if (length < 0) {
-        if (errno == EAGAIN)
-        {
-            return; // No event yet, harmless
-        }
-
-        std::cerr << "Error reading inotify events" << std::endl;
-        close(iInit);
-        return;
-    }
-
-    for (int i = 0; i < length; i += sizeof(struct inotify_event) + ((struct inotify_event*)&buffer[i])->len) {
-        struct inotify_event* event = (struct inotify_event*)&buffer[i];
-
-        // Check if the file was modified
-        if (event->mask & IN_MODIFY)
-        {
-            static std::streampos last_pos = 0;
-            std::ifstream log("/var/log/fail2ban.log");
-            log.seekg(last_pos);
-            std::string line;
-
-            while (std::getline(log, line)) {
-                if (line.find("Ban ") != std::string::npos) {
-                    size_t ip_pos = line.find("Ban ") + 4; // Move past "Ban "
-                    std::string ip = line.substr(ip_pos, line.find(" ", ip_pos) - ip_pos);
-                    std::string message = "**IP " + ip + " has been banned for 24h**";
-
-                    for(const uint64_t& id : cp_data.GetIpBanListner())
-                        cp_bot.message_create(dpp::message(id,message));
-                }
-            }
-            last_pos = log.tellg();
-            log.close();
-        }
-    }
-}
+#if(WIN32)
+    return;
 #endif
+    log.clear();
+    log.seekg(last_pos);
+    std::string line;
+    std::vector<std::string> messages;
+
+    while (std::getline(log, line)) {
+        // Process the log line if it contains the "Ban" keyword
+        if (line.find("Ban ") != std::string::npos) {
+            size_t ip_pos = line.find("Ban ") + 4;  // Move past "Ban "
+            std::string ip = line.substr(ip_pos, line.find(" ", ip_pos) - ip_pos);
+            messages.push_back( "**IP: " + ip + "**\n-# Banned for 24h.**" );
+        }
+    }
+
+    last_pos = log.tellg();
+
+    if (messages.size() == 0) return;
+
+    int i = 0;
+
+    for (const uint64_t& id : cp_data.GetIpBanListner())
+    {
+        std::function<void(const dpp::confirmation_callback_t& callback)> sendRecursive = [&](const dpp::confirmation_callback_t& callback)
+            {
+                i++;
+                if (i >= messages.size()) return;
+
+                cp_bot.message_create(dpp::message(id, messages[i]), sendRecursive);
+            };
+        cp_bot.message_create(dpp::message(id, messages[i]), sendRecursive);
+    }
+
+    messages.clear();
+}
