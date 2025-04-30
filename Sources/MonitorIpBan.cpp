@@ -60,7 +60,7 @@ void MonitorIpBan::Monitor()
                         cp_bot.message_create(dpp::message(id,message));
                 }
             }
-            close(log);
+            log.close();
         }
     }
 }
