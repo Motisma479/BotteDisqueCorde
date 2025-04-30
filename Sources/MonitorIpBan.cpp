@@ -4,8 +4,7 @@ MonitorIpBan::MonitorIpBan(dpp::cluster& _bot, Data& _data) : cp_bot(_bot), cp_d
 {
 #if(WIN32)
 #else
-    logfile_path = logfile;
-    log.open(logfile_path, std::ios::in);
+    log.open("/var/log/fail2ban.log", std::ios::in);
     if (!log.is_open()) {
         std::cerr << "Failed to open log file!" << std::endl;
         return;
