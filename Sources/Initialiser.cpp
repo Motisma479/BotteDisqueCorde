@@ -55,6 +55,14 @@ Data::Data()
 
 			pressenceMessage = message;
 		}
+		else if (!param.compare("IP_BAN_LISTNER:"))
+		{
+			std::string message;
+			while (std::getline(stream, message, ','))
+			{
+				ipBanListner.push_back(std::stoull(message));
+			}
+		}
 		//else if (!param.compare("MAX_SUS_IMAGES:"))
 		//	stream >> maxSusImages;
 	}
@@ -110,28 +118,59 @@ const std::vector<std::filesystem::path>& Data::GetMemeImages()
 {
 	return memeFiles;
 }
+
 const bool& Data::GetStopMachine()
 {
 	return stopMachine;
 }
+
 const std::string& Data::GetPressenceMessage()
 {
 	return pressenceMessage;
 }
-
 void Data::SetPressenceMessage(std::string message)
 {
 	pressenceMessage = message;
 	Save();
 }
 
+const std::vector<uint64_t>& Data::GetIpBanListner()
+{
+	return ipBanListner;
+}
+bool Data::AddIpBanListner(uint64_t _newChannel)
+{
+	for (int i = 0; i < ipBanListner.size();i++)
+	{
+		if (ipBanListner[i] == _newChannel)
+		{
+			ipBanListner.erase(ipBanListner.begin() + i);
+			Save();
+			return false;
+		}
+	}
+	ipBanListner.push_back(_newChannel);
+	Save();
+	return true;
+}
+
 void Data::Save()
 {
 	std::ofstream file("settings.ini");
-	if(file.is_open())
-	{	
+	if (file.is_open())
+	{
 		file << "STOP_THE_MACHINE_ON_COMMAND: " << (stopMachine ? "true" : "false") << '\n';
-		file << "PRESSENCE_MESSAGE: \"" << pressenceMessage << '\"';
+
+		file << "PRESSENCE_MESSAGE: \"" << pressenceMessage << "\"\n";
+
+		if (ipBanListner.size() > 0)
+		{
+			file << "IP_BAN_LISTNER: ";
+			for (int i = 0; i < ipBanListner.size() - 1;i++)
+				file << ipBanListner[i] << ',';
+			file << ipBanListner.back();
+		}
+
 		file.close();
 	}
 }

@@ -12,13 +12,21 @@ public:
 	void Reload();
 	const std::vector<std::filesystem::path>& GetSusImages();
 	const std::vector<std::filesystem::path>& GetMemeImages();
+
+	//member of setting.ini
 	const bool& GetStopMachine();
+
 	const std::string& GetPressenceMessage();
 	void SetPressenceMessage(std::string);
+
+	const std::vector<uint64_t>& GetIpBanListner();
+	bool AddIpBanListner(uint64_t _newChannel);
+
 private:
 	void Save();
 	std::vector<std::filesystem::path> AMOGUSFiles;
 	std::vector<std::filesystem::path> memeFiles;
-	bool stopMachine;
+	bool stopMachine = false;
 	std::string pressenceMessage;
+	std::vector<uint64_t> ipBanListner;
 };
