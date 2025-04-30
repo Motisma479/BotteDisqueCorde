@@ -14,6 +14,7 @@ void MonitorIpBan::Monitor()
 }
 #else
 #include <sys/inotify.h>
+#include <fcntl.h>
 void MonitorIpBan::Init()
 {
 	iInit = inotify_init();
@@ -22,6 +23,7 @@ void MonitorIpBan::Init()
         std::cerr << "Failed to initialize inotify" << std::endl;
         return;
     }
+    fcntl(iInit, F_SETFL, O_NONBLOCK);
 
     int wd = inotify_add_watch(iInit, "/var/log/fail2ban.log", IN_MODIFY);
     if (wd == -1)
@@ -36,6 +38,11 @@ void MonitorIpBan::Monitor()
 {
     int length = read(iInit, buffer, sizeof(buffer));
     if (length < 0) {
+        if (errno == EAGAIN)
+        {
+            return; // No event yet, harmless
+        }
+
         std::cerr << "Error reading inotify events" << std::endl;
         close(iInit);
         return;
@@ -47,7 +54,9 @@ void MonitorIpBan::Monitor()
         // Check if the file was modified
         if (event->mask & IN_MODIFY)
         {
+            static std::streampos last_pos = 0;
             std::ifstream log("/var/log/fail2ban.log");
+            log.seekg(last_pos);
             std::string line;
 
             while (std::getline(log, line)) {
@@ -60,6 +69,7 @@ void MonitorIpBan::Monitor()
                         cp_bot.message_create(dpp::message(id,message));
                 }
             }
+            last_pos = log.tellg();
             log.close();
         }
     }
