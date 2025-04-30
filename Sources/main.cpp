@@ -6,6 +6,7 @@
 
 #include "advancedFunction.hpp"
 #include "Commands/Commands.hpp"
+#include "MonitorIpBan.hpp"
 
 #ifdef _WIN32
 #define SHUTDOWN_COMMAND "shutdown -t 0 -f -s"
@@ -23,8 +24,10 @@ std::vector<std::unique_ptr<Commands::ICommand>> CommandList;
 
 Data data;
 PollManager pollManager(bot);
+MonitorIpBan monitorIpBan(bot, data);
 int main()
 {
+    monitorIpBan.Init();
     CommandList.push_back(std::make_unique<Commands::Amogus>("amogus", bot, data));
     CommandList.push_back(std::make_unique<Commands::Clear>("clear", bot, data));
     CommandList.push_back(std::make_unique<Commands::Dice>("dice", bot, data));
@@ -50,10 +53,13 @@ int main()
     });
 
     bot.on_ready([](const dpp::ready_t& event) {
+        
+
         bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_custom, data.GetPressenceMessage()));//set the presence when bot is starting.
         bot.start_timer([&](dpp::timer) //The main loop but manage by the timer.
         {
             pollManager.Update();
+            monitorIpBan.Monitor();
         }, 1);
 
         bot.global_commands_get([&](const dpp::confirmation_callback_t& callback) {
