@@ -35,10 +35,10 @@ void MonitorIpBan::Monitor()
         if (line.find("Ban ") != std::string::npos) {
             size_t ip_pos = line.find("Ban ") + 4;  // Move past "Ban "
             std::string ip = line.substr(ip_pos, line.find(" ", ip_pos) - ip_pos);
-            messages.push_back( "**IP: " + ip + "**\n-# Banned for 24h.**" );
+            messages.push_back( ">>> **IP: " + ip + "**\n-# **Banned for 24h.**" );
         }
     }
-
+    log.clear();
     last_pos = log.tellg();
     log.close();
 
