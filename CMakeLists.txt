@@ -35,6 +35,9 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 add_subdirectory(Externals/DPP)
 target_link_libraries(${PROJECT_NAME} dpp)
 
+find_package(CURL REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
+
 # copy all fille nedded to launch
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
      COMMAND ${CMAKE_COMMAND} -E copy_if_different

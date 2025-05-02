@@ -43,6 +43,20 @@ jobs:
       shell: bash
       run: echo "BUILD_DIR=${{ github.workspace }}/build" >> "$GITHUB_ENV"
 
+    - name: Install vcpkg
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git
+        ./vcpkg/bootstrap-vcpkg.sh || ./vcpkg/bootstrap-vcpkg.bat
+      shell: bash
+
+    - name: Install curl via vcpkg
+      shell: bash
+      run: |
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          ./vcpkg/vcpkg install curl[ssl] --triplet x64-windows-static
+        else
+          ./vcpkg/vcpkg install curl[ssl] --triplet x64-linux-static
+        fi
 
     - name: Configure CMake
       shell: bash
@@ -53,6 +67,8 @@ jobs:
           ${{ matrix.cpp_compiler && format('-DCMAKE_CXX_COMPILER={0}', matrix.cpp_compiler) || '' }} \
           -G "${{ matrix.generator }}" \
           ${{ matrix.arch && format('-A {0}', matrix.arch) || '' }} \
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake \
+          ${{ runner.os == 'Windows' && '-DVCPKG_TARGET_TRIPLET=x64-windows-static' || '-DVCPKG_TARGET_TRIPLET=x64-linux-static' }} \
           -S "${{ github.workspace }}"
 
     - name: Build
