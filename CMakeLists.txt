@@ -33,10 +33,8 @@ set(SOURCES
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 add_subdirectory(Externals/DPP)
-target_link_libraries(${PROJECT_NAME} dpp)
-
 find_package(CURL REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
+target_link_libraries(${PROJECT_NAME} PRIVATE dpp CURL::libcurl)
 
 # copy all fille nedded to launch
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
