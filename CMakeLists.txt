@@ -33,8 +33,9 @@ set(SOURCES
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 add_subdirectory(Externals/DPP)
-find_package(CURL REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE dpp CURL::libcurl)
+#set(CURL_USE_SCHANNEL ON CACHE BOOL "Use windows default SSL libraries")
+add_subdirectory(Externals/CURL)
+target_link_libraries(${PROJECT_NAME} PRIVATE dpp libcurl)
 
 # copy all fille nedded to launch
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
