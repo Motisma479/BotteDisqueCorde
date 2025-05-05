@@ -52,10 +52,6 @@ jobs:
           ${{ matrix.cpp_compiler && format('-DCMAKE_CXX_COMPILER={0}', matrix.cpp_compiler) || '' }} \
           -G "${{ matrix.generator }}" \
           ${{ matrix.arch && format('-A {0}', matrix.arch) || '' }} \
-          -DBUILD_SHARED_LIBS=OFF \
-          -DCURL_USE_STATIC_LIBS=ON \
-          ${{ runner.os == 'Windows' && format('-DCMAKE_TOOLCHAIN_FILE={0}/vcpkg/scripts/buildsystems/vcpkg.cmake', github.workspace) || '' }} \
-          ${{ runner.os == 'Windows' && '-DVCPKG_TARGET_TRIPLET=x64-windows-static' || '' }} \
           -S "${{ github.workspace }}"
 
     - name: Build
