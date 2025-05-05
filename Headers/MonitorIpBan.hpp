@@ -14,4 +14,6 @@ private:
 
 	std::streampos last_pos = 0;
 	std::ifstream log;
+
+	std::vector<std::string> messages;
 };

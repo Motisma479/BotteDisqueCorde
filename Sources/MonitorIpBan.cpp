@@ -289,7 +289,6 @@ void MonitorIpBan::Monitor()
 
     log.seekg(last_pos);
     std::string line;
-    std::vector<std::string> messages;
 
     while (std::getline(log, line)) {
         // Process the log line if it contains the "Ban" keyword
@@ -297,7 +296,7 @@ void MonitorIpBan::Monitor()
             size_t ip_pos = line.find("Ban ") + 4;  // Move past "Ban "
             std::string ip = line.substr(ip_pos, line.find(" ", ip_pos) - ip_pos);
             cp_bot.request("https://ipinfo.io/" +ip + "?token=" + IPINFO_TOKEN, dpp::m_get,
-            [&messages, ip](const dpp::http_request_completion_t& result) {
+            [this, ip](const dpp::http_request_completion_t& result) {
                 if (result.status == 200)
                 {
                     std::string country = extract_value(result.body, "country");
@@ -331,7 +330,7 @@ void MonitorIpBan::Monitor()
     {
         std::shared_ptr<size_t> index = std::make_shared<size_t>(0);
         auto sendRecursive = std::make_shared<std::function<void(const dpp::confirmation_callback_t&)>>();
-        *sendRecursive = [sendRecursive, this, id, messages, index](const dpp::confirmation_callback_t& callback) mutable
+        *sendRecursive = [sendRecursive, this, id, index](const dpp::confirmation_callback_t& callback) mutable
             {
                 (*index)++;
                 if (*index >= messages.size()) return;
