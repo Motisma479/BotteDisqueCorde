@@ -5,6 +5,7 @@
 #include <cstdint>
 
 const std::string GetToken();
+const std::string GetTokenIpInfo();
 class Data
 {
 public:

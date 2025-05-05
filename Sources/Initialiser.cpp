@@ -22,6 +22,25 @@ const std::string GetToken()
 		}
 	}
 }
+const std::string GetTokenIpInfo()
+{
+	std::ifstream token;
+	token.open("token.ini");
+	for (std::string line; std::getline(token, line); )
+	{
+		std::istringstream stream(line);
+		std::string param;
+		stream >> param;
+		if (param.size() <= 1) continue;
+		else if (!param.compare("IPINFO_TOKEN:"))
+		{
+			std::cout << "token loaded" << std::endl;
+			std::string test;
+			stream >> test;
+			return test;
+		}
+	}
+}
 
 Data::Data()
 {

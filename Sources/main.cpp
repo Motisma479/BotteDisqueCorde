@@ -52,8 +52,6 @@ int main()
     });
 
     bot.on_ready([](const dpp::ready_t& event) {
-        
-
         bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_custom, data.GetPressenceMessage()));//set the presence when bot is starting.
         bot.start_timer([&](dpp::timer) //The main loop but manage by the timer.
         {
