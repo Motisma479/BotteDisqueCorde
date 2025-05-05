@@ -42,23 +42,7 @@ jobs:
       id: vars
       shell: bash
       run: echo "BUILD_DIR=${{ github.workspace }}/build" >> "$GITHUB_ENV"
-
-    # ── Ubuntu: install system libcurl ───────────────────────────────────────────
-    - name: Install libcurl (Ubuntu)
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libcurl4-openssl-dev
-
-    # ── Windows: bootstrap vcpkg + install curl ─────────────────────────────────
-    - name: Bootstrap vcpkg & install curl (Windows)
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: |
-        git clone https://github.com/microsoft/vcpkg.git
-        .\vcpkg\bootstrap-vcpkg.bat
-        .\vcpkg\vcpkg install curl[ssl] --triplet x64-windows-static
-
+  
     - name: Configure CMake
       shell: bash
       run: |
