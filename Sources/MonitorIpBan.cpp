@@ -88,7 +88,7 @@ static const std::unordered_map<std::string, std::string> countryCodeMap = {
     {"CD", "Congo, Democratic Republic of the"},
     {"CK", "Cook Islands"},
     {"CR", "Costa Rica"},
-    {"CI", "Côte d'Ivoire"},
+    {"CI", "CÃ´te d'Ivoire"},
     {"HR", "Croatia"},
     {"CU", "Cuba"},
     {"CY", "Cyprus"},
@@ -206,8 +206,8 @@ static const std::unordered_map<std::string, std::string> countryCodeMap = {
     {"RO", "Romania"},
     {"RU", "Russian Federation"},
     {"RW", "Rwanda"},
-    {"RE", "Réunion"},
-    {"BL", "Saint Barthélemy"},
+    {"RE", "RÃ©union"},
+    {"BL", "Saint BarthÃ©lemy"},
     {"SH", "Saint Helena, Ascension and Tristan da Cunha"},
     {"KN", "Saint Kitts and Nevis"},
     {"LC", "Saint Lucia"},
@@ -310,7 +310,7 @@ void MonitorIpBan::Monitor()
 
                     std::transform(country.begin(), country.end(), country.begin(), ::tolower);
 
-                    messages.push_back(">>> **IP: " + ip + ":flag_" + country + ":**\n-# **Country: __"+ countryName +"__.**\n-# **Region: __" + region + "__.**\n-# **City: __" + city + "__.**\n-# **Banned for 24h.**");
+                    messages.push_back(">>> **IP: " + ip + " :flag_" + country + ":**\n-# **Country: __"+ countryName +"__.**\n-# **Region: __" + region + "__.**\n-# **City: __" + city + "__.**\n-# **Banned for 24h.**");
                 }
                 else
                 {
