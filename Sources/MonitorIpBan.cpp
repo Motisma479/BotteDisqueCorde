@@ -311,7 +311,7 @@ void MonitorIpBan::Monitor()
 
                     std::transform(country.begin(), country.end(), country.begin(), ::tolower);
 
-                    messages.push_back(">>> **IP: " + ip + " :flag_" + country + ":**\n-# **Country: __"+ countryName +"__.**\n-# **Region: __" + region + "__.**\n-# **City: __" + city + "__.**\n-# **Banned for 24h.**");
+                    messages.push_back(">>> **IP: [" + ip + "](<https://ipinfo.io/" + ip + ">) :flag_" + country + ":**\n-# **Country: __*"+ countryName +"*__**\n-# **Region: __*" + region + "*__**\n-# **City: __*" + city + "*__**\n-# **Banned for 24h.**");
                 }
                 else
                 {
