@@ -23,6 +23,7 @@ private:
 	Data& cp_data;
 
 	std::vector<std::tuple<std::string, IPInfo>> info;
+	bool shouldSave = false;
 
 	std::streampos last_pos = 0;
 	std::ifstream log;
