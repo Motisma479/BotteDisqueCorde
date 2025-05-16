@@ -315,7 +315,7 @@ void MonitorIpBan::Monitor()
                         countryName = deez->second;
                     }
 
-                    messages.push_back(">>> **IP: [" + ip + "](<https://ipinfo.io/" + ip + ">) :flag_" + found.country + ":**\n-# **Country: __*" + countryName + "*__**\n-# **Region: __*" + found.region + "*__**\n-# **City: __*" + found.city + "*__**\n-# **Banned for 24h.**\n**" + std::to_string(found.banCount) + " previous bans recorded for this IP.**");
+                    messages.push_back(">>> **IP: [" + ip + "](<https://ipinfo.io/" + ip + ">) :flag_" + found.country + ":**\n-# **Country: __*" + countryName + "*__**\n-# **Region: __*" + found.region + "*__**\n-# **City: __*" + found.city + "*__**-# \n-# **Banned for 24h.**\n**" + std::to_string(found.banCount) + " previous bans recorded for this IP.**");
                     found.banCount++;
                     shouldSave = true;
                 }
@@ -379,7 +379,7 @@ void MonitorIpBan::MessageViaRequest(std::string ip, IPInfo* data)
             if (it != countryCodeMap.end())
                 countryName = it->second;
 
-            messages.push_back(">>> **IP: [" + ip + "](<https://ipinfo.io/" + ip + ">) :flag_" + ipData.country + ":**\n-# **Country: __*" + countryName + "*__**\n-# **Region: __*" + ipData.region + "*__**\n-# **City: __*" + ipData.city + "*__**\n-# **Banned for 24h.**\n**" + std::to_string(ipData.banCount) + " previous bans recorded for this IP.**");
+            messages.push_back(">>> **IP: [" + ip + "](<https://ipinfo.io/" + ip + ">) :flag_" + ipData.country + ":**\n-# **Country: __*" + countryName + "*__**\n-# **Region: __*" + ipData.region + "*__**\n-# **City: __*" + ipData.city + "*__**\n-# **Banned for 24h.**-# \n**" + std::to_string(ipData.banCount) + " previous bans recorded for this IP.**");
         
             if (data)
             {
