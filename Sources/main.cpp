@@ -117,6 +117,28 @@ int main()
             //event.edit_response(dpp::message("command canceled...").set_flags(dpp::m_ephemeral));
             //bot.message_delete(event.command.message_id, event.command.channel_id);
         }
+        if (event.custom_id == "star_newcommand")
+        {
+            dpp::interaction_modal_response modal("star_commandmodal", "Please enter the command");
+
+            ///* Add a text component */
+            modal.add_component(
+                dpp::component()
+                .set_label("Command:")
+                .set_id("field_command")
+                .set_type(dpp::cot_text)
+                .set_placeholder("cd ~")
+                .set_min_length(1)
+                .set_max_length(4000)
+                .set_text_style(dpp::text_short)
+            );
+
+
+            //
+            //
+            ///* Trigger the dialog box. All dialog boxes are ephemeral */
+            event.dialog(modal);
+        }
     });
 
     /* Start the bot */    
