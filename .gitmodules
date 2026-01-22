@@ -1,3 +1,6 @@
 [submodule "Externals/DPP"]
 	path = Externals/DPP
 	url = https://github.com/brainboxdotcc/DPP
+[submodule "Externals/WORDS"]
+	path = Externals/WORDS
+	url = https://gist.github.com/daemondevin/df09befaf533c380743bc2c378863f0c
