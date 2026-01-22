@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iostream>
 #include <random>
+#include <algorithm>
 
 const std::string GetToken()
 {
