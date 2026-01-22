@@ -1,7 +1,7 @@
 #include "Initialiser.hpp"
-#include <fstream>
 #include <sstream>
 #include <iostream>
+#include <random>
 
 const std::string GetToken()
 {
@@ -85,8 +85,21 @@ Data::Data()
 		//else if (!param.compare("MAX_SUS_IMAGES:"))
 		//	stream >> maxSusImages;
 	}
+	settings.close();
 	
-	
+	words.reserve(3200);
+	std::ifstream wordsFile("5-letter-words.txt");
+	for (std::string line; std::getline(wordsFile, line); )
+	{
+		if (line.size() == 5)
+		{
+			std::array<char, 6> word = {};
+			std::copy_n(line.data(), 5, word.data());
+			word[5] = '\0';
+			words.push_back(word);
+		}
+	}
+	wordsFile.close();
 
 	std::filesystem::path p = std::filesystem::current_path().append("Resources/AMOGUS");
 	for (const auto& entry : std::filesystem::directory_iterator(p))
@@ -192,4 +205,20 @@ void Data::Save()
 
 		file.close();
 	}
+}
+
+
+bool Data::IsValid(std::string word) const
+{
+	std::array<char, 6> wordArr{};
+	std::copy_n(word.data(), 5, wordArr.data());
+	wordArr[5] = '\0';
+	return std::binary_search(words.begin(), words.end(), wordArr);
+}
+
+const char* Data::GetRandomWord() const
+{
+	static std::mt19937 gen{ std::random_device{}() };
+	std::uniform_int_distribution<std::size_t> dist(0, words.size() - 1);
+	return words[dist(gen)].data();
 }

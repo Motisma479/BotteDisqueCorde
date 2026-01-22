@@ -31,6 +31,7 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Clear>("clear", bot, data));
     CommandList.push_back(std::make_unique<Commands::Dice>("dice", bot, data));
     CommandList.push_back(std::make_unique<Commands::Dm>("dm", bot, data));
+    CommandList.push_back(std::make_unique<Commands::Guess>("guess", bot, data));
     CommandList.push_back(std::make_unique<Commands::Invite>("invite", bot, data));
     CommandList.push_back(std::make_unique<Commands::ListenToBanIp>("listen_to_ban_ip", bot, data));
     CommandList.push_back(std::make_unique<Commands::Meme>("meme", bot, data));

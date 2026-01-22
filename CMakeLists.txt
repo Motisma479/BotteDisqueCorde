@@ -15,6 +15,7 @@ set(SOURCES
     "Sources/Commands/Clear.cpp"
     "Sources/Commands/Dice.cpp"
     "Sources/Commands/Dm.cpp"
+    "Sources/Commands/Guess.cpp"
     "Sources/Commands/Invite.cpp"
     "Sources/Commands/ListenToBanIp.cpp"
     "Sources/Commands/Meme.cpp"
@@ -42,6 +43,7 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         ${CMAKE_SOURCE_DIR}/settings.ini
         ${CMAKE_SOURCE_DIR}/superAdminId
         ${CMAKE_SOURCE_DIR}/token.ini
+        ${CMAKE_SOURCE_DIR}/Externals/WORDS/5-letter-words.txt
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )
 
