@@ -95,6 +95,7 @@ std::vector<uint64_t> Commands::Guess::yellowID =
 Commands::Guess::Guess(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data)
 {
     wordToGuess = data.GetRandomWord();
+    wrongChars.resize(24, false);
 }
 
 void Commands::Guess::Init(bool registerCommand, uint64_t _commandId)
@@ -136,9 +137,24 @@ void Commands::Guess::Execute(const dpp::slashcommand_t& event)
             char guessC = wordToGuess[i];
             if (userC == guessC) temp.content += std::string("<:") + userC + ":" + std::to_string(greenID[userC - 97]) + ">";
             else if ([&]() { for (int j = i + 1; j < 5; j++) { if(userC == wordToGuess[j]) return true;}return false; }()) temp.content += std::string("<:") + userC + ":" + std::to_string(yellowID[userC - 97]) + ">";
-            else temp.content += std::string("<:") + userC + ":" + std::to_string(blackID[userC - 97]) + ">";
+            else
+            {
+                temp.content += std::string("<:") + userC + ":" + std::to_string(blackID[userC - 97]) + ">";
+                wrongChars[userC - 97] = true;
+                asWrongChar = true;
+            }
         }
-
+        if (asWrongChar)
+        {
+            temp.content += "\n-# ";
+            for (int i = 0; i < 24; i++)
+            {
+                if (!wrongChars[i]) continue;
+                temp.content += std::string("<:") + char(i+97) + ":" + std::to_string(blackID[i]) + ">";
+            } 
+        }
+        if(userWord == wordToGuess)
+            wordToGuess = cp_data.GetRandomWord();
         /*int index = lastRandom;
         if (cp_data.GetSusImages().size() > 1)
         {

@@ -13,6 +13,8 @@ namespace Commands
 		void Execute(const dpp::slashcommand_t& event) override;
 	private:
 		std::string wordToGuess;
+		bool asWrongChar = false;
+		std::vector<bool> wrongChars;
 
 		static std::vector<uint64_t> blackID;
 		static std::vector<uint64_t> greenID;
