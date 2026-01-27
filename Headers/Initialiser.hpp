@@ -33,6 +33,8 @@ public:
 
 private:
 	void Save();
+	void InsertWord(const std::string& word);
+
 	std::vector<std::filesystem::path> AMOGUSFiles;
 	std::vector<std::filesystem::path> memeFiles;
 	std::vector<std::array<char, 6>> words;

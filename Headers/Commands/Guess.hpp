@@ -14,7 +14,7 @@ namespace Commands
 	private:
 		std::string wordToGuess;
 		bool asWrongChar = false;
-		std::vector<bool> wrongChars;
+		std::array<bool, 24> wrongChars;
 
 		static std::vector<uint64_t> blackID;
 		static std::vector<uint64_t> greenID;

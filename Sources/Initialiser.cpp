@@ -102,6 +102,8 @@ Data::Data()
 	}
 	wordsFile.close();
 
+	InsertWord("ligma");//add easter egg
+	
 	std::filesystem::path p = std::filesystem::current_path().append("Resources/AMOGUS");
 	for (const auto& entry : std::filesystem::directory_iterator(p))
 	{
@@ -208,6 +210,19 @@ void Data::Save()
 	}
 }
 
+void Data::InsertWord(const std::string& word)
+{
+	std::array<char, 6> wordArr{};
+	std::copy_n(word.data(), 5, wordArr.data());
+	wordArr[5] = '\0';
+
+	auto it = std::lower_bound(words.begin(), words.end(), wordArr);
+	
+	if (it != words.end() && *it == wordArr)
+		return;
+
+	words.insert(it, wordArr);
+}
 
 bool Data::IsValid(std::string word) const
 {

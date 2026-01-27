@@ -95,7 +95,7 @@ std::vector<uint64_t> Commands::Guess::yellowID =
 Commands::Guess::Guess(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data)
 {
     wordToGuess = data.GetRandomWord();
-    wrongChars.resize(24, false);
+    wrongChars.fill(false);
 }
 
 void Commands::Guess::Init(bool registerCommand, uint64_t _commandId)
@@ -153,8 +153,12 @@ void Commands::Guess::Execute(const dpp::slashcommand_t& event)
                 temp.content += std::string("<:") + char(i+97) + ":" + std::to_string(blackID[i]) + ">";
             } 
         }
-        if(userWord == wordToGuess)
+        if (userWord == wordToGuess)
+        {
             wordToGuess = cp_data.GetRandomWord();
+            wrongChars.fill(false);
+            asWrongChar = false;
+        }
         /*int index = lastRandom;
         if (cp_data.GetSusImages().size() > 1)
         {
