@@ -134,9 +134,9 @@ void Commands::Guess::Execute(const dpp::slashcommand_t& event)
         {
             char userC = userWord[i];
             char guessC = wordToGuess[i];
-            if (userC == guessC) temp.content += std::string("<:" + userC) + ":" + std::to_string(greenID[userC - 97]) + ">";
-            else if ([&]() { for (int j = i + 1; j < 5; j++) { if(userC == wordToGuess[j]) return true;}return false; }()) temp.content += std::string("<:" + userC) + ":" + std::to_string(yellowID[userC - 97]) + ">";
-            else temp.content += std::string("<:" + userC) + ":" + std::to_string(blackID[userC - 97]) + ">";
+            if (userC == guessC) temp.content += std::string("<:") + userC + ":" + std::to_string(greenID[userC - 97]) + ">";
+            else if ([&]() { for (int j = i + 1; j < 5; j++) { if(userC == wordToGuess[j]) return true;}return false; }()) temp.content += std::string("<:") + userC + ":" + std::to_string(yellowID[userC - 97]) + ">";
+            else temp.content += std::string("<:") + userC + ":" + std::to_string(blackID[userC - 97]) + ">";
         }
 
         /*int index = lastRandom;
