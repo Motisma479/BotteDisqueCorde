@@ -6,16 +6,13 @@ Commands::Amogus::Amogus(const char* _name, dpp::cluster& bot, Data& data) : ICo
     AMOGUSGenerator = std::uniform_int_distribution<int>(0, data.GetSusImages().size() - 1);
 }
 
-void Commands::Amogus::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Amogus::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "did you say AMOGUS?", cp_bot.me.id);
+        commands.chatCommand = new dpp::slashcommand(name, "did you say AMOGUS?", cp_bot.me.id);
 
-        if (registerCommand) {
-            cp_bot.global_command_create(command);
-        }
+        ICommand::Init(_commandIds);
     }
 }
 

@@ -2,17 +2,14 @@
 
 Commands::Pressence::Pressence(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data) {}
 
-void Commands::Pressence::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Pressence::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "Change the pressence of the bot.", cp_bot.me.id);
-        command.add_option(dpp::command_option(dpp::co_string, "message", "The pressence message.", false));
-        if (registerCommand)
-        {
-            cp_bot.global_command_create(command);
-        }
+        commands.chatCommand = new dpp::slashcommand(name, "Change the pressence of the bot.", cp_bot.me.id);
+        commands.chatCommand->add_option(dpp::command_option(dpp::co_string, "message", "The pressence message.", false));
+        
+        ICommand::Init(_commandIds);
     }
 }
 

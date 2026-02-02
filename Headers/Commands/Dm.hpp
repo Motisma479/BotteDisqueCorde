@@ -8,7 +8,8 @@ namespace Commands
 	{
 	public:
 		Dm(const char* _name, dpp::cluster& bot, Data& data);
-		void Init(bool registerCommand, uint64_t _commandId) override;
+		void Init(CommandIds _commandIds) override;
 		void Execute(const dpp::slashcommand_t& event) override;
+		void Execute(const dpp::user_context_menu_t& _event) override;
 	};
 }

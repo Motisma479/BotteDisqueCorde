@@ -7,13 +7,12 @@
 
 Commands::Poll::Poll(const char* _name, dpp::cluster& bot, Data& data, PollManager& manager) : ICommand(_name, bot, data), pollManager(manager) {}
 
-void Commands::Poll::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Poll::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "Schedule a poll.", cp_bot.me.id);
-        command.set_default_permissions(dpp::p_administrator).
+        commands.chatCommand = new dpp::slashcommand(name, "Schedule a poll.", cp_bot.me.id);
+        commands.chatCommand->set_default_permissions(dpp::p_administrator).
             add_option(
                 dpp::command_option(dpp::co_sub_command, "add", "register a new Poll to the current chanel").
                 add_option(dpp::command_option(dpp::co_string, "question", "The poll question.", true).set_max_length(300)).
@@ -50,10 +49,8 @@ void Commands::Poll::Init(bool registerCommand, uint64_t _commandId)
             ).add_option(
                 dpp::command_option(dpp::co_sub_command, "delete", "Delete a poll with an id").add_option(dpp::command_option(dpp::co_integer, "id", "Poll id", true).set_min_value(0).set_max_value(65535))
             );
-        if (registerCommand)
-        {
-            cp_bot.global_command_create(command);
-        }
+        
+        ICommand::Init(_commandIds);
     }
 }
 

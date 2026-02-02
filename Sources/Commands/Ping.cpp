@@ -2,16 +2,14 @@
 
 Commands::Ping::Ping(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data) {}
 
-void Commands::Ping::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Ping::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "Ping pong!", cp_bot.me.id);
+        commands.chatCommand = new dpp::slashcommand(name, "Ping pong!", cp_bot.me.id);
+        commands.chatCommand->set_dm_permission(true);
 
-        if (registerCommand) {
-            cp_bot.global_command_create(command);
-        }
+        ICommand::Init(_commandIds);
     }
 }
 

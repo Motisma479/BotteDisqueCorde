@@ -3,18 +3,14 @@
 Commands::Stop::Stop(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data) {}
 
 
-void Commands::Stop::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Stop::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "stop the bot.", cp_bot.me.id);
-        command.set_default_permissions(dpp::p_administrator);
+        commands.chatCommand = new dpp::slashcommand(name, "stop the bot.", cp_bot.me.id);
+        commands.chatCommand->set_default_permissions(dpp::p_administrator);
 
-        if (registerCommand)
-        {
-            cp_bot.global_command_create(command);
-        }
+        ICommand::Init(_commandIds);
     }
 }
 

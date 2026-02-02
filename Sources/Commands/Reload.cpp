@@ -3,31 +3,23 @@
 
 Commands::Reload::Reload(const char* _name, dpp::cluster& bot, Data& data, std::vector<std::unique_ptr<Commands::ICommand>>& CommandList) : ICommand(_name, bot, data), CommandList(CommandList) {}
 
-void Commands::Reload::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Reload::Init(CommandIds _commandIds)
 {   
-    ICommand::Init(registerCommand, _commandId);
-
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "reload the bot data.", cp_bot.me.id);
-        command.set_default_permissions(dpp::p_administrator);
+        commands.chatCommand = new dpp::slashcommand(name, "reload the bot data.", cp_bot.me.id);
+        commands.chatCommand->set_default_permissions(dpp::p_administrator);
         dpp::command_option option_1(dpp::co_string, "command", "[superAdmin] force reset a specifique command ( not done by default ).", false);
 
         for (int i = 0; i < CommandList.size(); i++)
         {
             option_1.add_choice(dpp::command_option_choice(CommandList[i].get()->name, CommandList[i].get()->name));
         }
-        command.add_option(option_1);
+        commands.chatCommand->add_option(option_1);
 
-        if (registerCommand)
-        {
-            cp_bot.global_command_create(command);
-        }
-        else
-        {
-            command.id = _commandId;
-            cp_bot.global_command_edit(command); //automaticaly reload the command to get the last command;
-        }
+        ICommand::Init(_commandIds);
+
+        ICommand::Reload(true);
     }
 }
 

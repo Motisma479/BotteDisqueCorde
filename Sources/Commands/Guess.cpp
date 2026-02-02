@@ -98,17 +98,14 @@ Commands::Guess::Guess(const char* _name, dpp::cluster& bot, Data& data) : IComm
     wrongChars.fill(false);
 }
 
-void Commands::Guess::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Guess::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "Guess the word.", cp_bot.me.id);
-        command.add_option(dpp::command_option(dpp::co_string, "word", "A 5 letter word", true));
+        commands.chatCommand = new dpp::slashcommand(name, "Guess the word.", cp_bot.me.id);
+        commands.chatCommand->add_option(dpp::command_option(dpp::co_string, "word", "A 5 letter word", true)).set_dm_permission(true);
 
-        if (registerCommand) {
-            cp_bot.global_command_create(command);
-        }
+        ICommand::Init(_commandIds);
     }
 }
 
@@ -130,27 +127,48 @@ void Commands::Guess::Execute(const dpp::slashcommand_t& event)
             event.reply(dpp::message("Must be a real word.").set_flags(dpp::m_ephemeral));
             return;
         }
-        dpp::message temp;
+        dpp::message msg;
+        msg.flags |= dpp::m_using_components_v2;
+        msg.add_component_v2(
+            dpp::component()
+            .set_type(dpp::cot_container)
+            .add_component_v2(
+                dpp::component()
+                .set_type(dpp::cot_text_display)
+                .set_content("# ")
+            )
+        );
+
         for (int i = 0; i < 5; i++)
         {
             char userC = userWord[i];
             char guessC = wordToGuess[i];
-            if (userC == guessC) temp.content += std::string("<:") + userC + ":" + std::to_string(greenID[userC - 97]) + ">";
-            else if ([&]() { for (int j = i + 1; j < 5; j++) { if(userC == wordToGuess[j]) return true;}return false; }()) temp.content += std::string("<:") + userC + ":" + std::to_string(yellowID[userC - 97]) + ">";
+            if (userC == guessC) msg.components[0].components[0].content += std::string("<:") + userC + ":" + std::to_string(greenID[userC - 97]) + ">";
+            else if ([&]() { for (int j = 0; j < 5; j++) { if(userC == wordToGuess[j]) return true;}return false; }()) msg.components[0].components[0].content += std::string("<:") + userC + ":" + std::to_string(yellowID[userC - 97]) + ">";
             else
             {
-                temp.content += std::string("<:") + userC + ":" + std::to_string(blackID[userC - 97]) + ">";
+                msg.components[0].components[0].content += std::string("<:") + userC + ":" + std::to_string(blackID[userC - 97]) + ">";
                 wrongChars[userC - 97] = true;
                 asWrongChar = true;
             }
         }
         if (asWrongChar)
         {
-            temp.content += "\n-# ";
+            msg.components[0].add_component_v2(
+                dpp::component()
+                .set_type(dpp::cot_separator)
+                .set_spacing(dpp::sep_small)
+                .set_divider(true)
+            ).add_component_v2(
+                dpp::component()
+                .set_type(dpp::cot_text_display)
+                .set_content("\n-# ")
+            );
+
             for (int i = 0; i < 24; i++)
             {
                 if (!wrongChars[i]) continue;
-                temp.content += std::string("<:") + char(i+97) + ":" + std::to_string(blackID[i]) + ">";
+                msg.components[0].components[2].content += std::string("<:") + char(i+97) + ":" + std::to_string(blackID[i]) + ">";
             } 
         }
         if (userWord == wordToGuess)
@@ -175,6 +193,6 @@ void Commands::Guess::Execute(const dpp::slashcommand_t& event)
         };*/
 
 
-        event.reply(temp);
+        event.reply(msg);
     }
 }

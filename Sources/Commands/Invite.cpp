@@ -2,23 +2,19 @@
 
 Commands::Invite::Invite(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data) {}
 
-void Commands::Invite::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Invite::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "invite a user to play some game", cp_bot.me.id);
-        command.add_option(
+        commands.chatCommand = new dpp::slashcommand(name, "invite a user to play some game", cp_bot.me.id);
+        commands.chatCommand->add_option(
             dpp::command_option(dpp::co_string, "game", "The game to play", true).
             add_choice(dpp::command_option_choice("chess", std::string("game_chess")))
         ).add_option(
             dpp::command_option(dpp::co_user, "user", "User to play with", true)
         );
     
-        if (registerCommand)
-        {
-            cp_bot.global_command_create(command);
-        }
+        ICommand::Init(_commandIds);
     }
 }
 

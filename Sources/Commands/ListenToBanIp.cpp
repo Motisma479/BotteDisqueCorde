@@ -2,18 +2,14 @@
 
 Commands::ListenToBanIp::ListenToBanIp(const char* _name, dpp::cluster& bot, Data& data) : ICommand(_name, bot, data) {}
 
-void Commands::ListenToBanIp::Init(bool registerCommand, uint64_t _commandId)
+void Commands::ListenToBanIp::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "Make the channel listen for IP bans on the server. If called a second time, it cancels the effect.", cp_bot.me.id);
-        command.set_default_permissions(dpp::p_administrator);
+        commands.chatCommand = new dpp::slashcommand(name, "Make the channel listen for IP bans on the server. If called a second time, it cancels the effect.", cp_bot.me.id);
+        commands.chatCommand->set_default_permissions(dpp::p_administrator);
 
-        if (registerCommand)
-        {
-            cp_bot.global_command_create(command);
-        }
+        ICommand::Init(_commandIds);
     }
 }
 

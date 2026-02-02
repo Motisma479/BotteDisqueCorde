@@ -52,6 +52,21 @@ int main()
         }
     });
 
+    bot.on_message_context_menu([](const dpp::message_context_menu_t& event) {
+        for (int i = 0; i < CommandList.size(); i++)
+        {
+            CommandList[i].get()->Execute(event);
+        }
+    });
+
+    bot.on_user_context_menu([](const dpp::user_context_menu_t& event) {
+        for (int i = 0; i < CommandList.size(); i++)
+        {
+            CommandList[i].get()->Execute(event);
+        }
+    });
+    
+
     bot.on_ready([](const dpp::ready_t& event) {
         bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_custom, data.GetPressenceMessage()));//set the presence when bot is starting.
         bot.start_timer([&](dpp::timer) //The main loop but manage by the timer.
@@ -61,32 +76,63 @@ int main()
         }, 1);
 
         bot.global_commands_get([&](const dpp::confirmation_callback_t& callback) {
-            std::vector<std::pair<std::string,uint64_t>> existingCommand;
+            std::vector<std::pair<std::string, CommandIds>> existingCommand;
 
             if (!callback.is_error()) {
                 auto commands = std::get<dpp::slashcommand_map>(callback.value);
                 for (const auto& [id, cmd] : commands) {
                     std::cout << "Existing Command: " << cmd.name << " (ID: " << id << ")\n";
-                    existingCommand.push_back(std::make_pair(cmd.name,id));
+
+                    std::vector<std::pair<std::string, CommandIds>>::iterator it;
+                    it = std::find_if(existingCommand.begin(), existingCommand.end(), [&](const std::pair<std::string, CommandIds>& entry) {return entry.first == cmd.name; });
+                    if (it != existingCommand.end())
+                    {
+                        if(cmd.type == dpp::ctxm_chat_input)
+                            it->second.chat = id;
+                        else if (cmd.type == dpp::ctxm_message)
+                            it->second.message = id;
+                        else if (cmd.type == dpp::ctxm_user)
+                            it->second.user = id;
+                    }
+                    else
+                    {
+                        CommandIds temp;
+                        if (cmd.type == dpp::ctxm_chat_input)
+                            temp.chat = id;
+                        else if (cmd.type == dpp::ctxm_message)
+                            temp.message = id;
+                        else if (cmd.type == dpp::ctxm_user)
+                            temp.user = id;
+                        existingCommand.push_back(std::make_pair(cmd.name,temp));
+                    }
+                        
                 }
             }
 
             for (auto& command : CommandList)
             {
-                std::vector<std::pair<std::string, uint64_t>>::iterator it;
-                it = std::find_if(existingCommand.begin(), existingCommand.end(), [&](const std::pair<std::string, uint64_t>& entry){return entry.first == command->name;});
+                std::vector<std::pair<std::string, CommandIds>>::iterator it;
+                it = std::find_if(existingCommand.begin(), existingCommand.end(), [&](const std::pair<std::string, CommandIds>& entry){return entry.first == command->name;});
                 if (it != existingCommand.end())
                 {
-                    command->Init(false,it->second);
+                    command->Init(it->second);
                     existingCommand.erase(it);
                 }
                 else
-                    command->Init(true, 0);
+                    command->Init({0,0,0});
             }
 
-            for(const auto& [name, id] : existingCommand)//delete all the obselet command
+            for(const auto& [name, ids] : existingCommand)//delete all the obselet command
             {
-                bot.global_command_delete(id);
+                if(ids.chat != 0)
+                    bot.global_command_delete(ids.chat);
+
+                if (ids.message != 0)
+                    bot.global_command_delete(ids.message);
+
+                if (ids.user != 0)
+                    bot.global_command_delete(ids.user);
+                
             }
         });
     });
@@ -139,6 +185,36 @@ int main()
             //
             ///* Trigger the dialog box. All dialog boxes are ephemeral */
             event.dialog(modal);
+        }
+    });
+
+    bot.on_form_submit([](const dpp::form_submit_t& _event) {
+        if (_event.custom_id.starts_with("dm_modal_"))
+        {
+            std::string message_text = std::get<std::string>(_event.components[0].components[0].value);
+            dpp::snowflake targetId(_event.custom_id.substr(std::string("dm_modal_").length()));
+
+
+            dpp::message message(message_text);
+            message.allowed_mentions.parse_users = true;
+            message.allowed_mentions.parse_everyone = true;
+            message.allowed_mentions.parse_roles = true;
+            message.allowed_mentions.replied_user = true;
+            
+            _event.reply(dpp::message("**Sendind a DM...**").set_flags(dpp::m_ephemeral));
+            dpp::message sucessAwnser = dpp::message("> **You send: **_" + message.content + "_\n> **To: ** <@" + std::to_string(targetId) + ">").set_flags(dpp::m_ephemeral);
+            
+            bot.direct_message_create(targetId, message, [_event, sucessAwnser](const dpp::confirmation_callback_t& callback)
+            {
+                if (!callback.is_error())
+                {
+                    _event.edit_original_response(sucessAwnser);
+                }
+                else
+                {
+                    _event.edit_original_response(dpp::message("**ERROR: " + callback.get_error().message + "**").set_flags(dpp::m_ephemeral));
+                }
+            });
         }
     });
 

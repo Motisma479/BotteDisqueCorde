@@ -5,20 +5,16 @@ Commands::Dice::Dice(const char* _name, dpp::cluster& bot, Data& data) : IComman
     rng.seed(time(NULL));
 }
 
-void Commands::Dice::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Dice::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "roll a dice", cp_bot.me.id);
-        command.add_option(
+        commands.chatCommand = new dpp::slashcommand(name, "roll a dice", cp_bot.me.id);
+        commands.chatCommand->add_option(
             dpp::command_option(dpp::co_integer, "face", "the number face", false)
-        );
+        ).set_dm_permission(true);
 
-        if (registerCommand)
-        {
-            cp_bot.global_command_create(command);
-        }
+        ICommand::Init(_commandIds);
     }
 }
 

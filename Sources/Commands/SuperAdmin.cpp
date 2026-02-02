@@ -6,22 +6,17 @@ Commands::SuperAdmin::SuperAdmin(const char* _name, dpp::cluster & bot, Data& da
     name = "super_admin";
 }
 
-void Commands::SuperAdmin::Init(bool registerCommand, uint64_t _commandId)
+void Commands::SuperAdmin::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
-
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand("super_admin", "Super Admin management!", cp_bot.me.id);
-        command.set_default_permissions(dpp::p_administrator).
+        commands.chatCommand = new dpp::slashcommand("super_admin", "Super Admin management!", cp_bot.me.id);
+        commands.chatCommand->set_default_permissions(dpp::p_administrator).
             add_option(dpp::command_option(dpp::co_sub_command, "add", "Add a new superAdmin").add_option(dpp::command_option(dpp::co_user, "user", "the user to promote",true))).
             add_option(dpp::command_option(dpp::co_sub_command, "list", "List all the superAdmin")).
             add_option(dpp::command_option(dpp::co_sub_command, "delete", "Delete a superAdmin").add_option(dpp::command_option(dpp::co_user, "user", "the user to delete", true)));
-            
-
-        if (registerCommand) {
-            cp_bot.global_command_create(command);
-        }
+         
+        ICommand::Init(_commandIds);
     }
 }
 

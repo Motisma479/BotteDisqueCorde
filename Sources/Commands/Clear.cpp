@@ -24,21 +24,16 @@ void callback(const dpp::confirmation_callback_t& event)
     return;
 }
 
-void Commands::Clear::Init(bool registerCommand, uint64_t _commandId)
+void Commands::Clear::Init(CommandIds _commandIds)
 {
-    ICommand::Init(registerCommand, _commandId);
-
     if (dpp::run_once<struct register_bot_commands>())
     {
-        command = dpp::slashcommand(name, "clear the chanel", cp_bot.me.id);
-        command.add_option(
+        commands.chatCommand = new dpp::slashcommand(name, "clear the chanel", cp_bot.me.id);
+        commands.chatCommand->add_option(
             dpp::command_option(dpp::co_integer, "count", "the number of message to delete", false)
         );
         
-        if (registerCommand) {
-            cp_bot.global_command_create(command);
-        }
-        
+        ICommand::Init(_commandIds);    
     }
 }
 
