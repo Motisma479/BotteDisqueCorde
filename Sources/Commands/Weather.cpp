@@ -77,7 +77,7 @@ std::string Commands::Weather::GetWindDirPoint(int _degrees)
     _degrees = (_degrees % 360 + 360) % 360;
 
     //Each direction spans 22.5°
-    int index = static_cast<int>(std::floorf((_degrees) / 22.5f));
+    int index = static_cast<int>(std::floor((_degrees) / 22.5f));
 
     return directions[index];
 }
