@@ -91,9 +91,9 @@ int main()
                             response["current"]["uvi"],
                             response["current"]["wind_speed"],
                             response["current"]["wind_deg"],
-                            response["current"]["weather"]["id"],
-                            response["current"]["weather"]["main"],
-                            response["current"]["weather"]["description"]
+                            response["current"]["weather"][0]["id"],
+                            response["current"]["weather"][0]["main"],
+                            response["current"]["weather"][0]["description"]
                             });
                     }
                 });
