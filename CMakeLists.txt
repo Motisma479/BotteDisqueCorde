@@ -26,6 +26,7 @@ set(SOURCES
     "Sources/Commands/Say.cpp"
     "Sources/Commands/Stop.cpp"
     "Sources/Commands/SuperAdmin.cpp"
+    "Sources/Commands/Weather.cpp"
 
     "Sources/PollManager/Poll.cpp"
     "Sources/PollManager/PollManager.cpp"

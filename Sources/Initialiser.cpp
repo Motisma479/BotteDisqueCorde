@@ -42,6 +42,25 @@ const std::string GetTokenIpInfo()
 		}
 	}
 }
+const std::string GetTokenWeather()
+{
+	std::ifstream token;
+	token.open("token.ini");
+	for (std::string line; std::getline(token, line); )
+	{
+		std::istringstream stream(line);
+		std::string param;
+		stream >> param;
+		if (param.size() <= 1) continue;
+		else if (!param.compare("WEATHER_TOKEN:"))
+		{
+			std::cout << "token loaded" << std::endl;
+			std::string test;
+			stream >> test;
+			return test;
+		}
+	}
+}
 
 Data::Data()
 {
@@ -82,6 +101,29 @@ Data::Data()
 			{
 				ipBanListner.push_back(std::stoull(message));
 			}
+		}
+		else if (!param.compare("LATITUDE:"))
+		{
+			std::string test;
+			stream >> test;
+			latitude = std::stod(test);
+		}
+		else if (!param.compare("LONGITUDE:"))
+		{
+			std::string test;
+			stream >> test;
+			longitude = std::stod(test);
+		}
+		else if (!param.compare("METRICS:"))
+		{
+			std::string message;
+			std::getline(stream, message);
+			if (!message.empty() && message[1] == '\"' && message.back() == '\"')
+			{
+				message = message.substr(2, message.length() - 3);
+			}
+
+			metrics = message;
 		}
 		//else if (!param.compare("MAX_SUS_IMAGES:"))
 		//	stream >> maxSusImages;
@@ -159,6 +201,19 @@ const bool& Data::GetStopMachine()
 	return stopMachine;
 }
 
+double Data::GetLatitude() const
+{
+	return latitude;
+}
+double Data::GetLongitude() const
+{
+	return longitude;
+}
+std::string Data::GetMetrics() const
+{
+	return metrics;
+}
+
 const std::string& Data::GetPressenceMessage()
 {
 	return pressenceMessage;
@@ -189,6 +244,15 @@ bool Data::AddIpBanListner(uint64_t _newChannel)
 	return true;
 }
 
+WeatherData Data::GetWeatherData() const
+{
+	return weatherData;
+}
+void Data::SetWeatherData(const WeatherData& _data)
+{
+	weatherData = _data;
+}
+
 void Data::Save()
 {
 	std::ofstream file("settings.ini");
@@ -203,8 +267,12 @@ void Data::Save()
 			file << "IP_BAN_LISTNER: ";
 			for (int i = 0; i < ipBanListner.size() - 1;i++)
 				file << ipBanListner[i] << ',';
-			file << ipBanListner.back();
+			file << ipBanListner.back() << "\n";
 		}
+
+		file << "LATITUDE: " << std::to_string(latitude) << "\n";
+		file << "LONGITUDE: " << std::to_string(longitude) << "\n";
+		file << "METRICS: \"" << metrics << "\"\n";
 
 		file.close();
 	}

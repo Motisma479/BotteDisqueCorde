@@ -16,3 +16,4 @@
 #include "Commands/Say.hpp"
 #include "Commands/Stop.hpp"
 #include "Commands/SuperAdmin.hpp"
+#include "Commands/Weather.hpp"

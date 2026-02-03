@@ -42,6 +42,7 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Say>("say", bot, data));
     CommandList.push_back(std::make_unique<Commands::Stop>("stop", bot, data));
     CommandList.push_back(std::make_unique<Commands::SuperAdmin>("super_admin", bot, data));
+    CommandList.push_back(std::make_unique<Commands::Weather>("weather", bot, data));
 
     bot.on_log(dpp::utility::cout_logger());
     
@@ -74,6 +75,52 @@ int main()
             pollManager.Update();
             monitorIpBan.Monitor();
         }, 1);
+        bot.start_timer([&](const dpp::timer&) {
+            std::cout << "making a weather request\n";
+            std::string weatherAPILink = "https://api.openweathermap.org/data/3.0/onecall?lat=" + std::to_string(data.GetLatitude()) + "&lon=" + std::to_string(data.GetLongitude()) + "&exclude=minutely,hourly,daily,alerts&units=" + data.GetMetrics() + "&appid=" + GetTokenWeather();
+            bot.request(weatherAPILink, dpp::m_get,
+                [](const dpp::http_request_completion_t& result) {
+                    if (result.status == 200)
+                    {
+                        dpp::json response(result.body);
+                        data.SetWeatherData({
+                            response["current"]["temp"],
+                            response["current"]["feels_like"],
+                            response["current"]["humidity"],
+                            response["current"]["clouds"],
+                            response["current"]["uvi"],
+                            response["current"]["wind_speed"],
+                            response["current"]["wind_deg"],
+                            response["current"]["weather"]["id"],
+                            response["current"]["weather"]["main"],
+                            response["current"]["weather"]["description"]
+                            });
+                    }
+                });
+        }, 600);
+        {
+            std::cout << "making a weather request\n";
+            std::string weatherAPILink = "https://api.openweathermap.org/data/3.0/onecall?lat=" + std::to_string(data.GetLatitude()) + "&lon=" + std::to_string(data.GetLongitude()) + "&exclude=minutely,hourly,daily,alerts&units=" + data.GetMetrics() + "&appid=" + GetTokenWeather();
+            bot.request(weatherAPILink, dpp::m_get,
+                [](const dpp::http_request_completion_t& result) {
+                    if (result.status == 200)
+                    {
+                        dpp::json response = dpp::json::parse(result.body);
+                        data.SetWeatherData({
+                            response["current"]["temp"],
+                            response["current"]["feels_like"],
+                            response["current"]["humidity"],
+                            response["current"]["clouds"],
+                            response["current"]["uvi"],
+                            response["current"]["wind_speed"],
+                            response["current"]["wind_deg"],
+                            response["current"]["weather"][0]["id"],
+                            response["current"]["weather"][0]["main"],
+                            response["current"]["weather"][0]["description"]
+                            });
+                    }
+                });
+        }
 
         bot.global_commands_get([&](const dpp::confirmation_callback_t& callback) {
             std::vector<std::pair<std::string, CommandIds>> existingCommand;
