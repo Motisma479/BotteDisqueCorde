@@ -37,7 +37,7 @@ void Commands::Weather::Execute(const dpp::slashcommand_t& _event)
             .add_component_v2(
                 dpp::component()
                 .set_type(dpp::cot_text_display)
-                .set_content("## " + std::string(wd.temperatureFeel <= 5.0 ? ":snowflake": wd.temperatureFeel >= 25.0 ? ":fire:" : ":thermometer:") +std::format("  {:.2f}℃ | {:.2f}℃", wd.temperature, wd.temperatureFeel))
+                .set_content("## " + std::string(wd.temperatureFeel <= 5.0 ? ":snowflake:": wd.temperatureFeel >= 25.0 ? ":fire:" : ":thermometer:") +std::format("  {:.2f}℃ | {:.2f}℃", wd.temperature, wd.temperatureFeel))
             )
             .add_component_v2(
                 dpp::component()
