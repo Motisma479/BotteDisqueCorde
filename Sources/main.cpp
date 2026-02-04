@@ -82,7 +82,7 @@ int main()
                 [](const dpp::http_request_completion_t& result) {
                     if (result.status == 200)
                     {
-                        dpp::json response(result.body);
+                        dpp::json response = dpp::json::parse(result.body);
                         data.SetWeatherData({
                             response["current"]["temp"],
                             response["current"]["feels_like"],
