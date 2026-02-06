@@ -35,7 +35,7 @@ void Commands::UnbanIp::Execute(const dpp::slashcommand_t& _event)
         _event.reply(dpp::message("Temporarily not supported.").set_flags(dpp::m_ephemeral));
 #else
         _event.reply(dpp::message("IP: \"" + ip + "\" unbaned.").set_flags(dpp::m_ephemeral));
-        std::system("sudo fail2ban-client set sshd unbanip " + ip);
+        std::system(std::string("sudo fail2ban-client set sshd unbanip " + ip).c_str());
 #endif
 
     }
