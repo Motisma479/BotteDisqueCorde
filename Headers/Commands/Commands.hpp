@@ -14,6 +14,7 @@
 #include "Commands/Pressence.hpp"
 #include "Commands/Reload.hpp"
 #include "Commands/Say.hpp"
+#include "Commands/Settings.hpp"
 #include "Commands/Stop.hpp"
 #include "Commands/SuperAdmin.hpp"
 #include "Commands/Weather.hpp"

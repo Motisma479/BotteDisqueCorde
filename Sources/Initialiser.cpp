@@ -196,22 +196,41 @@ const std::vector<std::filesystem::path>& Data::GetMemeImages()
 	return memeFiles;
 }
 
-const bool& Data::GetStopMachine()
+bool Data::GetStopMachine() const
 {
 	return stopMachine;
+}
+
+void Data::SetStopMachine(bool _value)
+{
+	stopMachine = _value;
 }
 
 double Data::GetLatitude() const
 {
 	return latitude;
 }
+void Data::SetLatitude(double _value)
+{
+	latitude = _value;
+}
+
 double Data::GetLongitude() const
 {
 	return longitude;
 }
+void Data::SetLongitude(double _value)
+{
+	longitude = _value;
+}
+
 std::string Data::GetMetrics() const
 {
 	return metrics;
+}
+void Data::SetMetrics(std::string _value)
+{
+	metrics = _value;
 }
 
 const std::string& Data::GetPressenceMessage()

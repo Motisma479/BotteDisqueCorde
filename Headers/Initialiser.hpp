@@ -37,10 +37,14 @@ public:
 	const char* GetRandomWord() const;
 
 	//member of setting.ini
-	const bool& GetStopMachine();
+	bool GetStopMachine() const;
+	void SetStopMachine(bool _value);
 	double GetLatitude() const;
+	void SetLatitude(double _value);
 	double GetLongitude() const;
+	void SetLongitude(double _value);
 	std::string GetMetrics() const;
+	void SetMetrics(std::string _value);
 
 	const std::string& GetPressenceMessage();
 	void SetPressenceMessage(std::string);
@@ -51,8 +55,8 @@ public:
 	WeatherData GetWeatherData() const;
 	void SetWeatherData(const WeatherData& _data);
 
-private:
 	void Save();
+private:
 	void InsertWord(const std::string& word);
 
 	std::vector<std::filesystem::path> AMOGUSFiles;

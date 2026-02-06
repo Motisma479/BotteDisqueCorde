@@ -24,6 +24,7 @@ set(SOURCES
     "Sources/Commands/Pressence.cpp"
     "Sources/Commands/Reload.cpp"
     "Sources/Commands/Say.cpp"
+    "Sources/Commands/Settings.cpp"
     "Sources/Commands/Stop.cpp"
     "Sources/Commands/SuperAdmin.cpp"
     "Sources/Commands/Weather.cpp"

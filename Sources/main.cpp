@@ -40,6 +40,7 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Pressence>("pressence", bot, data));
     CommandList.push_back(std::make_unique<Commands::Reload>("reload", bot, data, CommandList));
     CommandList.push_back(std::make_unique<Commands::Say>("say", bot, data));
+    CommandList.push_back(std::make_unique<Commands::Settings>("settings", bot, data));
     CommandList.push_back(std::make_unique<Commands::Stop>("stop", bot, data));
     CommandList.push_back(std::make_unique<Commands::SuperAdmin>("super_admin", bot, data));
     CommandList.push_back(std::make_unique<Commands::Weather>("weather", bot, data));
@@ -236,6 +237,18 @@ int main()
     });
 
     bot.on_form_submit([](const dpp::form_submit_t& _event) {
+        if (_event.custom_id == "settings_modal")
+        {
+            data.SetStopMachine(std::get<std::string>(_event.components[0].value) == "true");
+            data.SetLatitude(std::stod(std::get<std::string>(_event.components[2].value)));
+            data.SetLongitude(std::stod(std::get<std::string>(_event.components[3].value)));
+            data.SetMetrics(std::get<std::string>(_event.components[4].value));
+
+            data.SetPressenceMessage(std::get<std::string>(_event.components[1].value)); //set the pressence message at last since it save the settings
+            bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_custom, std::get<std::string>(_event.components[1].value)));
+
+            _event.reply(dpp::message("**New Settings saved!**").set_flags(dpp::m_ephemeral));
+        }
         if (_event.custom_id.starts_with("dm_modal_"))
         {
             std::string message_text = std::get<std::string>(_event.components[0].components[0].value);
