@@ -27,6 +27,7 @@ set(SOURCES
     "Sources/Commands/Settings.cpp"
     "Sources/Commands/Stop.cpp"
     "Sources/Commands/SuperAdmin.cpp"
+    "Sources/Commands/UnbanIp.cpp"
     "Sources/Commands/Weather.cpp"
 
     "Sources/PollManager/Poll.cpp"

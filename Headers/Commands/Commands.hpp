@@ -17,4 +17,5 @@
 #include "Commands/Settings.hpp"
 #include "Commands/Stop.hpp"
 #include "Commands/SuperAdmin.hpp"
+#include "Commands/UnbanIp.hpp"
 #include "Commands/Weather.hpp"
