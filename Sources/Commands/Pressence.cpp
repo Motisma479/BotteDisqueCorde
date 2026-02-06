@@ -7,7 +7,7 @@ void Commands::Pressence::Init(CommandIds _commandIds)
     if (dpp::run_once<struct register_bot_commands>())
     {
         commands.chatCommand = new dpp::slashcommand(name, "Change the pressence of the bot.", cp_bot.me.id);
-        commands.chatCommand->add_option(dpp::command_option(dpp::co_string, "message", "The pressence message.", false));
+        commands.chatCommand->add_option(dpp::command_option(dpp::co_string, "message", "The pressence message.", false)).set_default_permissions(dpp::p_administrator);
         
         ICommand::Init(_commandIds);
     }

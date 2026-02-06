@@ -31,7 +31,7 @@ void Commands::Clear::Init(CommandIds _commandIds)
         commands.chatCommand = new dpp::slashcommand(name, "clear the chanel", cp_bot.me.id);
         commands.chatCommand->add_option(
             dpp::command_option(dpp::co_integer, "count", "the number of message to delete", false)
-        );
+        ).set_default_permissions(dpp::p_administrator);
         
         ICommand::Init(_commandIds);    
     }
