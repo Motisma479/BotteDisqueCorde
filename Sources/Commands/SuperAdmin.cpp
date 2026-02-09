@@ -78,6 +78,11 @@ void Commands::SuperAdmin::Execute(const dpp::slashcommand_t& event)
         else if (subCommand == "delete")
         {
             dpp::snowflake newUserId = std::get<dpp::snowflake>(event.get_parameter("user"));
+            if (newUserId == ids[0]) // add a security to not delete the main super admin
+            {
+                event.reply(dpp::message("> <@" + newUserId.str() + "> cannot be removed as he is the first super admin.").set_flags(dpp::m_ephemeral));
+                return;
+            }
             auto it = std::find(ids.begin(), ids.end(), newUserId);
 
             if (it != ids.end())
