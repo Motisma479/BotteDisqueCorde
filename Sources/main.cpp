@@ -41,6 +41,7 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Reload>("reload", bot, data, CommandList));
     CommandList.push_back(std::make_unique<Commands::Say>("say", bot, data));
     CommandList.push_back(std::make_unique<Commands::Settings>("settings", bot, data));
+    CommandList.push_back(std::make_unique<Commands::Status>("status", bot, data));
     CommandList.push_back(std::make_unique<Commands::Stop>("stop", bot, data));
     CommandList.push_back(std::make_unique<Commands::SuperAdmin>("super_admin", bot, data));
     CommandList.push_back(std::make_unique<Commands::UnbanIp>("unban_ip", bot, data));

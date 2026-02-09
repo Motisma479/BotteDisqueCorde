@@ -25,6 +25,7 @@ set(SOURCES
     "Sources/Commands/Reload.cpp"
     "Sources/Commands/Say.cpp"
     "Sources/Commands/Settings.cpp"
+    "Sources/Commands/Status.cpp"
     "Sources/Commands/Stop.cpp"
     "Sources/Commands/SuperAdmin.cpp"
     "Sources/Commands/UnbanIp.cpp"

@@ -15,6 +15,7 @@
 #include "Commands/Reload.hpp"
 #include "Commands/Say.hpp"
 #include "Commands/Settings.hpp"
+#include "Commands/Status.hpp"
 #include "Commands/Stop.hpp"
 #include "Commands/SuperAdmin.hpp"
 #include "Commands/UnbanIp.hpp"
