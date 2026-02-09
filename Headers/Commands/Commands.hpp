@@ -18,4 +18,5 @@
 #include "Commands/Stop.hpp"
 #include "Commands/SuperAdmin.hpp"
 #include "Commands/UnbanIp.hpp"
+#include "Commands/Upload.hpp"
 #include "Commands/Weather.hpp"

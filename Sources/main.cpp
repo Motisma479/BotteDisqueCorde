@@ -44,6 +44,7 @@ int main()
     CommandList.push_back(std::make_unique<Commands::Stop>("stop", bot, data));
     CommandList.push_back(std::make_unique<Commands::SuperAdmin>("super_admin", bot, data));
     CommandList.push_back(std::make_unique<Commands::UnbanIp>("unban_ip", bot, data));
+    CommandList.push_back(std::make_unique<Commands::Upload>("upload", bot, data));
     CommandList.push_back(std::make_unique<Commands::Weather>("weather", bot, data));
 
     bot.on_log(dpp::utility::cout_logger());
