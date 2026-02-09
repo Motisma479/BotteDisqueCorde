@@ -435,7 +435,7 @@ DiskInfo Commands::Status::GetDiskInfo()
     return info;
 }
 
-std::vector<GPUInfo> Commands::Status::GetGPUInfo()
+std::vector<GPUInfo> Commands::Status::GetGPUsInfo()
 {
     std::vector<GPUInfo> gpus;
 
