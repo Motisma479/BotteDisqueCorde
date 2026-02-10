@@ -422,6 +422,7 @@ DiskInfo Commands::Status::GetDiskInfo()
 {
     DiskInfo info;
     struct statvfs stat;
+    std::string path = "/";
 
     if (statvfs(path.c_str(), &stat) != 0)
     {
